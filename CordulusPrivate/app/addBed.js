@@ -31,6 +31,14 @@ export default function addBed() {
   };
 
   const handleSubmit = () => {
+    const bedData = {
+      Plantname: plantname,
+      Position: position,
+      SensorID: sensorID,
+    };
+
+    console.log("sensor ID: " + bedData.SensorID);
+
     if (validateForm()) {
       console.log("Submitted", plantname, position, sensorID);
       setPlantname("");
@@ -38,12 +46,8 @@ export default function addBed() {
       setSensorID("");
       setErrors({});
     }
-    
-
-
   };
 
-  //
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <StatusBar backgroundColor="lightgrey" />
