@@ -8,6 +8,7 @@ import {
 } from "react-native";
 
 import { useState, useEffect } from "react";
+import ContinueButton from "./continueButton";
 
 export default function CordulusData() {
   const key = "aa149d68-f7be-493e-a827-fc9e6ebd5155";
@@ -15,8 +16,14 @@ export default function CordulusData() {
 
   const fetchData = async (limit = 10, timeout = 10000) => {
     try {
+      const key = "aa149d68-f7be-493e-a827-fc9e6ebd5155"; // Your API key stored in a variable
       const response = await Promise.race([
-        fetch("http://192.168.192.141:3000/devices"),
+        fetch("https://weather.cordulus.com/api/v1/devices", {
+          method: "GET", // This is assuming the API uses GET requests; adjust if different
+          headers: {
+            Authorization: key, // Including the API key in the Authorization header
+          },
+        }),
         new Promise((_, reject) =>
           setTimeout(() => reject(new Error("Request timed out")), timeout)
         ),
@@ -77,19 +84,27 @@ export default function CordulusData() {
                 <Text style={styles.bodyText}>Rain (10m): {rain10m}</Text>
                 <Text style={styles.bodyText}>Rain (1h): {rain1h}</Text>
                 <Text style={styles.bodyText}>Rain (24h): {rain24h}</Text>
+                
+                
               </View>
             );
           }}
         />
+        
       </View>
+
+      <ContinueButton></ContinueButton>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "black",
     paddingTop: StatusBar.currentHeight,
+    paddingHorizontal: 18,
+    justifyContent: "space-between", // Ensures content is spread out vertically
+    
   },
 
   listContainer: {
@@ -99,10 +114,11 @@ const styles = StyleSheet.create({
 
   card: {
     backgroundColor: "white",
-    padding: 32,
+    padding: 18,
     borderRadius: 8,
     borderWidth: 1,
     marginBottom: 16, // Add margin between cards if needed
+    paddingBottom: 18
   },
   titleText: {
     fontSize: 30,
