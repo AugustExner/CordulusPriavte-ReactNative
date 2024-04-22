@@ -37,8 +37,6 @@ export default function addBed() {
       SensorID: sensorID,
     };
 
-    console.log("sensor ID: " + bedData.SensorID);
-
     if (validateForm()) {
       console.log("Submitted", plantname, position, sensorID);
       setPlantname("");

@@ -18,7 +18,7 @@ export default function CordulusData() {
     try {
       const key = "aa149d68-f7be-493e-a827-fc9e6ebd5155"; // Your API key stored in a variable
       const response = await Promise.race([
-        fetch("https://weather.cordulus.com/api/v1/devices", {
+        fetch("https://king-prawn-app-o3hjk.ondigitalocean.app/devices", {
           method: "GET", // This is assuming the API uses GET requests; adjust if different
           headers: {
             Authorization: key, // Including the API key in the Authorization header
@@ -49,6 +49,7 @@ export default function CordulusData() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="lightgrey" />
       <View style={styles.listContainer}>
         <FlatList
           data={postList}
@@ -92,15 +93,13 @@ export default function CordulusData() {
         />
         
       </View>
-
-      <ContinueButton></ContinueButton>
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "lightgrey",
     paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 18,
     justifyContent: "space-between", // Ensures content is spread out vertically

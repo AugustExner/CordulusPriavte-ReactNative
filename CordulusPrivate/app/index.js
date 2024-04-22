@@ -13,13 +13,18 @@ import ContinueButton from "../components/continueButton";
 export default function HomePage() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.titleText}>Cordulus </Text>
       <StatusBar backgroundColor="lightgrey" />
+      <Text style={styles.titleText}>Cordulus </Text>
+      
       <Text style={styles.titleText}>Private</Text>
       <Text style={styles.baseText}>Rethinking Irrigation </Text>
       <ContinueButton
         text="Continue"
         onPress={() => router.push("/addBed")}
+      ></ContinueButton>
+      <ContinueButton
+        text="API"
+        onPress={() => router.push("./cordulusApi/Api")}
       ></ContinueButton>
     </SafeAreaView>
   );
