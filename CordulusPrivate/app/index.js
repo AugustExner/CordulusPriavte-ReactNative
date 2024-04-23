@@ -15,7 +15,7 @@ export default function HomePage() {
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="lightgrey" />
       <Text style={styles.titleText}>Cordulus </Text>
-      
+
       <Text style={styles.titleText}>Private</Text>
       <Text style={styles.baseText}>Rethinking Irrigation </Text>
       <ContinueButton
@@ -23,8 +23,16 @@ export default function HomePage() {
         onPress={() => router.push("/addBed")}
       ></ContinueButton>
       <ContinueButton
-        text="API"
-        onPress={() => router.push("./cordulusApi/Api")}
+        text="API GET"
+        onPress={() => router.push("./cordulusApi/apiGet")}
+      ></ContinueButton>
+      <ContinueButton
+        text="API POST"
+        onPress={() => router.push("./cordulusApi/apiPost")}
+      ></ContinueButton>
+      <ContinueButton
+        text="UpdateApp POST"
+        onPress={() => router.push("./cordulusApi/apiUpdateApp")}
       ></ContinueButton>
     </SafeAreaView>
   );
@@ -36,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 18,
-    justifyContent: "space-between", // Ensures content is spread out vertically
   },
   titleText: {
     fontSize: 80,
@@ -46,6 +53,6 @@ const styles = StyleSheet.create({
   baseText: {
     fontSize: 24,
     fontWeight: "regular",
-    marginTop: 30,
+    marginTop: 0,
   },
 });

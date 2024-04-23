@@ -10,13 +10,76 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import { useState } from "react";
+import * as Location from "expo-location";
+import { useState, useEffect } from "react";
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
   const [position, setPosition] = useState("");
   const [sensorID, setSensorID] = useState("");
   const [errors, setErrors] = useState({});
+  const [location, setLocation] = useState();
+  const [isPosting, setIsPosting] = useState(false);
+
+  const addPost = async () => {
+    setIsPosting(true);
+    const plantArray = ["item1", "item2"];
+
+    try {
+      const response = await fetch("http://165.22.75.121:3000/updateApp", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id: parseInt(sensorID),
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          plants: plantArray,
+        }),
+        //body: JSON.stringify({
+        //   sensors: [1],
+        //}),
+      });
+
+      //console.log(
+      //  JSON.stringify({
+      //    id: parseInt(sensorID),
+      //    latitude: location.coords.latitude,
+      //    longitude: location.coords.longitude,
+      //    plants: plantArray,
+      //  })
+      //);
+      // Check for successful response
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // Handle the successful response with data
+      console.log("Post added successfully:", data);
+    } catch (error) {
+      console.error("Error adding post:", error);
+      // Handle errors here, for example, display an error message to the user
+    } finally {
+      setIsPosting(false); // Set posting state to false regardless of success or error
+    }
+  };
+
+  useEffect(() => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Please grant location permissions");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+      //console.log("Latitude: " + currentLocation.coords.latitude +" Longitude: " + currentLocation.coords.longitude);
+    };
+    getPermissions();
+  });
 
   const validateForm = () => {
     let errors = {};
@@ -32,10 +95,12 @@ export default function addBed() {
 
   const handleSubmit = () => {
     const bedData = {
-      Plantname: plantname,
-      Position: position,
-      SensorID: sensorID,
+      plants: plantname,
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      id: sensorID,
     };
+    console.log(bedData);
 
     if (validateForm()) {
       console.log("Submitted", plantname, position, sensorID);
@@ -44,6 +109,8 @@ export default function addBed() {
       setSensorID("");
       setErrors({});
     }
+
+    addPost();
   };
 
   return (
@@ -64,22 +131,14 @@ export default function addBed() {
         {errors.plantname ? (
           <Text style={styles.errorText}>{errors.plantname}</Text>
         ) : null}
-        <Text style={styles.label}>Position</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Latitude, Longitude"
-          value={position}
-          onChangeText={setPosition}
-        ></TextInput>
-        {errors.position ? (
-          <Text style={styles.errorText}>{errors.position}</Text>
-        ) : null}
+
         <Text style={styles.label}>Sensor ID</Text>
         <TextInput
           style={styles.input}
-          placeholder="Sensor 1"
+          placeholder="1"
           value={sensorID}
           onChangeText={setSensorID}
+          keyboardType="numeric"
         ></TextInput>
         {errors.sensorID ? (
           <Text style={styles.errorText}>{errors.sensorID}</Text>

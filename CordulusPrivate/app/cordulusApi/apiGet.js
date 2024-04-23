@@ -10,18 +10,17 @@ import {
 import { useState, useEffect } from "react";
 
 export default function CordulusData() {
-  const key = "aa149d68-f7be-493e-a827-fc9e6ebd5155";
   const [postList, setPostList] = useState([]);
 
-  const fetchData = async (limit = 10, timeout = 10000) => {
+  const fetchData = async (timeout = 10000) => {
     try {
       const key = "aa149d68-f7be-493e-a827-fc9e6ebd5155"; // Your API key stored in a variable
       const response = await Promise.race([
-        fetch("https://king-prawn-app-o3hjk.ondigitalocean.app/devices", {
+        fetch("http://165.22.75.121:3000/devices", {
           method: "GET", // This is assuming the API uses GET requests; adjust if different
-          headers: {
-            Authorization: key, // Including the API key in the Authorization header
-          },
+          //headers: {
+          //  Authorization: key, // Including the API key in the Authorization header
+          //},
         }),
         new Promise((_, reject) =>
           setTimeout(() => reject(new Error("Request timed out")), timeout)
@@ -33,6 +32,7 @@ export default function CordulusData() {
       }
 
       const data = await response.json();
+      console.log("Incomming Data:")
       console.log(data);
 
       setPostList(data["devices"]);
@@ -48,7 +48,6 @@ export default function CordulusData() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Hvad</Text>
       <StatusBar backgroundColor="lightgrey" />
       <View style={styles.listContainer}>
         <FlatList
@@ -103,7 +102,6 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 18,
     justifyContent: "space-between", // Ensures content is spread out vertically
-    
   },
 
   listContainer: {

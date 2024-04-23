@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "black",
     width: "100%", // Makes the button take full width of the container
-    padding: 18,
-    marginBottom: 64, // Bottom padding outside the button
+    padding: 10,
+    marginBottom: 32, // Bottom padding outside the button
   },
   buttonText: {
     fontSize: 20,
