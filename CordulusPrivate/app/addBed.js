@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { useState, useEffect } from "react";
+import { storeID } from "./sensorStorage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -24,6 +26,7 @@ export default function addBed() {
   const addPost = async () => {
     setIsPosting(true);
     const plantArray = ["item1", "item2"];
+    const sensorArray = [1, 2];
 
     try {
       const response = await fetch("http://165.22.75.121:3000/updateApp", {
@@ -31,15 +34,15 @@ export default function addBed() {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({
-          id: parseInt(sensorID),
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          plants: plantArray,
-        }),
         //body: JSON.stringify({
-        //   sensors: [1],
+        //  id: parseInt(sensorID),
+        //  latitude: location.coords.latitude,
+        //  longitude: location.coords.longitude,
+        //  plants: plantArray,
         //}),
+        body: JSON.stringify({
+          sensors: sensorArray,
+        }),
       });
 
       //console.log(
@@ -102,6 +105,8 @@ export default function addBed() {
     };
     console.log(bedData);
 
+    storeID(sensorID); // Call the function to store the id
+
     if (validateForm()) {
       console.log("Submitted", plantname, position, sensorID);
       setPlantname("");
@@ -109,7 +114,7 @@ export default function addBed() {
       setSensorID("");
       setErrors({});
     }
-
+    //CALL THEESE FUNCTIONS WHEN SUBMIT IS PRESSED
     addPost();
   };
 
@@ -156,6 +161,7 @@ export default function addBed() {
   );
 }
 
+//STYLE///
 const styles = StyleSheet.create({
   container: {
     flex: 1,

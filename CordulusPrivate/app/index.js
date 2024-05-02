@@ -5,10 +5,17 @@ import {
   Pressable,
   StyleSheet,
   StatusBar,
+  Button,
 } from "react-native";
 import { Link, router } from "expo-router";
 
+import {
+  readSensorId,
+  readSensorArray,
+  clearAsyncStorage,
+} from "./sensorStorage";
 import ContinueButton from "../components/continueButton";
+import addBed from "./addBed";
 
 export default function HomePage() {
   return (
@@ -19,21 +26,33 @@ export default function HomePage() {
       <Text style={styles.titleText}>Private</Text>
       <Text style={styles.baseText}>Rethinking Irrigation </Text>
       <ContinueButton
-        text="Continue"
+        text="Add Garden Bed"
         onPress={() => router.push("/addBed")}
       ></ContinueButton>
       <ContinueButton
         text="API GET"
         onPress={() => router.push("./cordulusApi/apiGet")}
       ></ContinueButton>
-      <ContinueButton
-        text="API POST"
-        onPress={() => router.push("./cordulusApi/apiPost")}
-      ></ContinueButton>
+
       <ContinueButton
         text="UpdateApp POST"
         onPress={() => router.push("./cordulusApi/apiUpdateApp")}
       ></ContinueButton>
+      <Button
+        title="Read sensor data"
+        color="blue"
+        onPress={() => {
+          readSensorId();
+          readSensorArray();
+        }}
+      />
+      <Button
+        title="Clear async storage"
+        color="red"
+        onPress={() => {
+          clearAsyncStorage();
+        }}
+      />
     </SafeAreaView>
   );
 }

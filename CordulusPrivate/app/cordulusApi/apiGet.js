@@ -32,7 +32,7 @@ export default function CordulusData() {
       }
 
       const data = await response.json();
-      console.log("Incomming Data:")
+      console.log("Incomming Data:");
       console.log(data);
 
       setPostList(data["devices"]);
@@ -70,7 +70,7 @@ export default function CordulusData() {
 
             return (
               <View style={styles.card}>
-                <Text style={styles.titleText}>Label: {label}</Text>
+                <Text style={styles.titleText}>SensorID: {label}</Text>
                 <Text style={styles.bodyText}>
                   Current TimeStamp: {timeStamp}
                 </Text>
@@ -84,13 +84,10 @@ export default function CordulusData() {
                 <Text style={styles.bodyText}>Rain (10m): {rain10m}</Text>
                 <Text style={styles.bodyText}>Rain (1h): {rain1h}</Text>
                 <Text style={styles.bodyText}>Rain (24h): {rain24h}</Text>
-                
-                
               </View>
             );
           }}
         />
-        
       </View>
     </SafeAreaView>
   );
@@ -115,7 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     marginBottom: 16, // Add margin between cards if needed
-    paddingBottom: 18
+    paddingBottom: 18,
   },
   titleText: {
     fontSize: 30,
