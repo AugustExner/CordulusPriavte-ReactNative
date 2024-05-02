@@ -29,30 +29,27 @@ export default function addBed() {
     const sensorArray = [1, 2];
 
     try {
-      const response = await fetch("http://165.22.75.121:3000/updateApp", {
+      const response = await fetch("http://165.22.75.121:3000/newGarden", {
         method: "post",
         headers: {
           "Content-type": "application/json",
         },
-        //body: JSON.stringify({
-        //  id: parseInt(sensorID),
-        //  latitude: location.coords.latitude,
-        //  longitude: location.coords.longitude,
-        //  plants: plantArray,
-        //}),
         body: JSON.stringify({
-          sensors: sensorArray,
+          id: parseInt(sensorID),
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          plants: plantname,
         }),
       });
 
-      //console.log(
-      //  JSON.stringify({
-      //    id: parseInt(sensorID),
-      //    latitude: location.coords.latitude,
-      //    longitude: location.coords.longitude,
-      //    plants: plantArray,
-      //  })
-      //);
+      console.log(
+        JSON.stringify({
+          id: parseInt(sensorID),
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          plants: plantname,
+        })
+      );
       // Check for successful response
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -103,6 +100,7 @@ export default function addBed() {
       longitude: location.coords.longitude,
       id: sensorID,
     };
+    console.log("bedData");
     console.log(bedData);
 
     storeID(sensorID); // Call the function to store the id

@@ -38,7 +38,7 @@ export const readSensorId = async () => {
   }
 };
 
-export const readSensorArray = async () => {
+export const readSensorArray1 = async () => {
   try {
     const value = await AsyncStorage.getItem("sensorArray");
     if (value !== null) {
@@ -47,12 +47,28 @@ export const readSensorArray = async () => {
       sensorIntArray = sensorStringArray.map(Number);
 
       //console.log("sensorStringArray: ", sensorStringArray);
-      console.log("sensorIntArray: ", sensorIntArray);
-      console.log("updateAppPost");
-      updateAppPost();
+      //console.log("sensorIntArray: ", sensorIntArray);
+      //console.log("updateAppPost");
+      //updateAppPost(); // DATA
+      return updateAppPost();
     }
   } catch (e) {
     console.error("Error reading sensorArray:", e); // Log error for consistency
+  }
+};
+
+export const readSensorArray = async () => {
+  try {
+    const value = await AsyncStorage.getItem("sensorArray");
+    if (value !== null) {
+      sensorStringArray = JSON.parse(value);
+      sensorIntArray = sensorStringArray.map(Number);
+      return updateAppPost();
+    }
+    return null;  // Ensure you return null or an empty array if no data is found
+  } catch (e) {
+    console.error("Error reading sensorArray:", e);
+    return null;  // Ensure error handling returns null or an appropriate value
   }
 };
 
@@ -69,7 +85,7 @@ export const clearAsyncStorage = async () => {
   }
 };
 
-const updateAppPost = async () => {
+export const updateAppPost = async () => {
   try {
     const response = await fetch("http://165.22.75.121:3000/updateApp", {
       method: "post",
@@ -94,8 +110,13 @@ const updateAppPost = async () => {
 
     const data = await response.json();
     // Handle the successful response with data
-    console.log("Post added successfully:", data);
-  } catch (error) {
+    console.log("Post added successfully:");
+    console.log(data);
+
+    return data; // Return the received data
+  } 
+  
+  catch (error) {
     console.error("Error adding post:", error);
     // Handle errors here, for example, display an error message to the user
   }
