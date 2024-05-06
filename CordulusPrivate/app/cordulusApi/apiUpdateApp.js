@@ -48,17 +48,19 @@ export default function updateAppPost() {
   }, [postData]);
 
   const renderItem = ({ item }) => (
-    <View style={styles.postContainer}>
-      <Text style={styles.sensorText}>Plants: {item.plants}</Text>
-      <Text style = {styles.regularText}> SensorID: {item.id}</Text>
-      <Text style = {styles.regularText}> Temperature: {item.temperature}</Text>
-      <Text style = {styles.regularText}> Humidity: {item.humidity}</Text>
-      <Text style = {styles.regularText}> Moisture: {item.moisture}</Text>
-      <Image
-          style={styles.image}
-          source={require("../../assets/gardenBed.png")}
-        />
-    </View>
+    <Link to="plantDetailsScreen" params={{ plant: item }}>
+      <View style={styles.postContainer}>
+        <Text style={styles.sensorText}>Plants: {item.plants}</Text>
+        <Text style = {styles.regularText}> SensorID: {item.id}</Text>
+        <Text style = {styles.regularText}> Temperature: {item.temperature}</Text>
+        <Text style = {styles.regularText}> Humidity: {item.humidity}</Text>
+        <Text style = {styles.regularText}> Moisture: {item.moisture}</Text>
+        <Image
+            style={styles.image}
+            source={require("../../assets/gardenBed.png")}
+          />
+      </View>
+    </Link>
   );
 
   return (
