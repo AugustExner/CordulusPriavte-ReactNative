@@ -13,7 +13,7 @@ import {
 import * as Location from "expo-location";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -25,9 +25,6 @@ export default function addBed() {
 
   const addPost = async () => {
     setIsPosting(true);
-    const plantArray = ["item1", "item2"];
-    const sensorArray = [1, 2];
-
     try {
       const response = await fetch("http://165.22.75.121:3000/newGarden", {
         method: "post",
@@ -38,7 +35,7 @@ export default function addBed() {
           id: parseInt(sensorID),
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          plants: plantname,
+          plants: [plantname],  
         }),
       });
 

@@ -6,53 +6,33 @@ import {
   StyleSheet,
   StatusBar,
   Button,
+  TouchableOpacity,
 } from "react-native";
 import { Link, router } from "expo-router";
-
-import {
-  readSensorId,
-  readSensorArray,
-  clearAsyncStorage,
-} from "./sensorStorage";
-import ContinueButton from "../components/continueButton";
-import addBed from "./addBed";
 
 export default function HomePage() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="lightgrey" />
-      <Text style={styles.titleText}>Cordulus </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.titleText}>Cordulus </Text>
+        <Text style={styles.titleText}>Private</Text>
+        <Text style={styles.baseText}>Rethinking Irrigation </Text>
+      </View>
 
-      <Text style={styles.titleText}>Private</Text>
-      <Text style={styles.baseText}>Rethinking Irrigation </Text>
-      <ContinueButton
-        text="Add Garden Bed"
-        onPress={() => router.push("/addBed")}
-      ></ContinueButton>
-      <ContinueButton
-        text="API GET"
-        onPress={() => router.push("./cordulusApi/apiGet")}
-      ></ContinueButton>
-
-      <ContinueButton
-        text="UpdateApp POST"
+      <TouchableOpacity
+        style={styles.touchButtonMyPlants}
         onPress={() => router.push("./cordulusApi/apiUpdateApp")}
-      ></ContinueButton>
-      <Button
-        title="Read sensor data"
-        color="blue"
-        onPress={() => {
-          readSensorId();
-          readSensorArray();
-        }}
-      />
-      <Button
-        title="Clear async storage"
-        color="red"
-        onPress={() => {
-          clearAsyncStorage();
-        }}
-      />
+      >
+        <Text style={styles.buttonText}>My plants</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.touchButton}
+        onPress={() => router.push("/addBed")}
+      >
+        <Text style={styles.buttonText}>Add +</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -63,6 +43,11 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 18,
+    alignContent: "center",
+    justifyContent: "center",
+  },
+  headerContainer: {
+    marginBottom: 400,
   },
   titleText: {
     fontSize: 80,
@@ -73,5 +58,41 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "regular",
     marginTop: 0,
+  },
+  buttonStyle: {
+    justifyContent: "flex-end",
+  },
+  touchButton: {
+    backgroundColor: "white",
+    width: 70,
+    height: 70,
+    borderRadius: 20, // Set diameter as width and round corners for circle
+    borderWidth: 3,
+    borderColor: "black",
+    position: "absolute", // Remove from normal flow
+    bottom: 32, // Position from bottom
+
+    right: 20, // Position from right
+    alignItems: "center", // Center content horizontally
+    justifyContent: "center", // Center content vertically
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "black",
+    fontWeight: "bold",
+  },
+
+  touchButtonMyPlants: {
+    backgroundColor: "white",
+    width: 240,
+    height: 70,
+    borderRadius: 20, // Set diameter as width and round corners for circle
+    borderWidth: 3,
+    borderColor: "black",
+    position: "absolute", // Remove from normal flow
+    bottom: 32, // Position from bottom
+    left: 20, // Position from right
+    alignItems: "center", // Center content horizontally
+    justifyContent: "center", // Center content vertically
   },
 });
