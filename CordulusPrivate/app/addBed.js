@@ -13,7 +13,7 @@ import {
 import * as Location from "expo-location";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
-
+import TagInputComponent from "./tagsInput";
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -35,7 +35,7 @@ export default function addBed() {
           id: parseInt(sensorID),
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          plants: [plantname],  
+          plants: [plantname],
         }),
       });
 
@@ -121,7 +121,9 @@ export default function addBed() {
           style={styles.image}
           source={require("../assets/gardenBed.png")}
         />
-        <Text style={styles.label}>Plant name</Text>
+
+        <Text style={styles.label}>Bed name</Text>
+
         <TextInput
           style={styles.input}
           placeholder="Tomatoes"
@@ -131,6 +133,9 @@ export default function addBed() {
         {errors.plantname ? (
           <Text style={styles.errorText}>{errors.plantname}</Text>
         ) : null}
+
+        <Text style={styles.label}>Plants</Text>
+        <TagInputComponent style={styles.input} />
 
         <Text style={styles.label}>Sensor ID</Text>
         <TextInput

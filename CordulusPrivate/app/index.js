@@ -29,7 +29,7 @@ export default function HomePage() {
 
       <TouchableOpacity
         style={styles.touchButton}
-        onPress={() => router.push("/addBed")}
+        onPress={() => router.push("./addBed")}
       >
         <Text style={styles.buttonText}>Add +</Text>
       </TouchableOpacity>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   touchButton: {
-    backgroundColor: "white",
+    backgroundColor: "green",
     width: 70,
     height: 70,
     borderRadius: 20, // Set diameter as width and round corners for circle

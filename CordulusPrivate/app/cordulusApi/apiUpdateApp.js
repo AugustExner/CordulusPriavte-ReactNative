@@ -89,7 +89,7 @@ export default function updateAppPost() {
       <StatusBar backgroundColor="lightgrey" />
       <Text style={styles.headerText}>My Plants</Text>
       <FlatList
-        style={{ marginBottom: 120 }}
+        style={{ marginBottom: 130 }}
         data={postData}
         renderItem={renderItem}
         keyExtractor={generateRandomNumber} // Unique key for each item
