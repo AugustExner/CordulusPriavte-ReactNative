@@ -3,10 +3,12 @@ import { View, Text, Image, StyleSheet, } from "react-native";
 import { Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import plantData from "../../assets/plants.json";
+import { useLocalSearchParams } from "expo-router";
 
-export default function plantDetailsScreen({ route }) {
+export default function plantDetailsScreen() {
 
   const screenWidth = Dimensions.get("window").width;
+  const {plantName} = useLocalSearchParams();
 
   const data = {
     labels: ["-3", "-2","-1", "Today", "+2", "+3", "+4", "+5"],
@@ -21,7 +23,7 @@ export default function plantDetailsScreen({ route }) {
 
   return (
     <View>
-      <Text style={styles.chartText}>Title på plante</Text>
+      <Text style={styles.chartText}>{plantName}</Text>
       <Image
           style={styles.image}
           source={require("../../assets/gardenBed.png")}

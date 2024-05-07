@@ -8,12 +8,14 @@ import {
   View,
   StatusBar,
   Image,
+  Pressable,
 } from "react-native";
 
 import { readSensorArray } from "../sensorStorage";
 
 import { Link, router } from "expo-router";
 import { useState, useEffect, useCallback, useId } from "react";
+
 
 export default function updateAppPost() {
   const [refreshing, setRefreshing] = useState(false);
@@ -48,7 +50,12 @@ export default function updateAppPost() {
   }, [postData]);
 
   const renderItem = ({ item }) => (
-    <Link href="./plantDetailsScreen">
+    <Pressable onPress={() => {
+      router.push({
+        pathname:'./plantDetailsScreen',
+        params: { plantName: item.plants },
+      })
+    }}>
     <View style={styles.postContainer}>
       <Text style={styles.sensorText}>Plants: {item.plants}</Text>
       <Text style = {styles.regularText}> SensorID: {item.id}</Text>
@@ -60,7 +67,7 @@ export default function updateAppPost() {
           source={require("../../assets/gardenBed.png")}
         />
     </View>
-    </Link>
+    </Pressable>
   );
 
   return (
