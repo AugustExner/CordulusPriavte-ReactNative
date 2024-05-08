@@ -16,6 +16,7 @@ import {
 } from "./sensorStorage";
 import ContinueButton from "../components/continueButton";
 import addBed from "./addBed";
+import ImageComponent from "./ImageComponent";
 
 export default function HomePage() {
   return (
@@ -25,6 +26,9 @@ export default function HomePage() {
 
       <Text style={styles.titleText}>Private</Text>
       <Text style={styles.baseText}>Rethinking Irrigation </Text>
+      <ImageComponent>
+        
+      </ImageComponent>
       <ContinueButton
         text="Add Garden Bed"
         onPress={() => router.push("/addBed")}

@@ -14,7 +14,6 @@ import * as Location from "expo-location";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ImageComponent from './ImageComponent';
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -125,9 +124,6 @@ export default function addBed() {
           style={styles.image}
           source={require("../assets/gardenBed.png")}
         />
-        <ImageComponent onImageSelected={(uri) => {
-          console.log('Selected image:', uri);
-        }}/>
         <Text style={styles.label}>Plant name</Text>
         <TextInput
           style={styles.input}
