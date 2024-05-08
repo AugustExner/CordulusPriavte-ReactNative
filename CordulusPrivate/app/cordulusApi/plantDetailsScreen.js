@@ -10,11 +10,29 @@ export default function plantDetailsScreen() {
   const screenWidth = Dimensions.get("window").width;
   const {plantName} = useLocalSearchParams();
 
+  function getPlantData(plantName) {
+    const lowerCaseName = plantName.toLowerCase();
+    for (const key in plantData["plants"]) {
+      if (key.toLowerCase().includes(lowerCaseName)) {
+        return {
+          sunlight: plantData["plants"][key]["sunlight"],
+          water: plantData["plants"][key]["water"],
+        };
+      }
+    }
+    return { 
+      sunlight: "Data not available",
+      water: "Data not available",
+    };
+  }
+  
+  const { sunlight, water } = getPlantData(plantName);
+
   const data = {
     labels: ["-3", "-2","-1", "Today", "+2", "+3", "+4", "+5"],
     datasets: [
       {
-        data: [20, 45, 28, 80, 99, 43, 60, 48],
+        data: [20, 45, 28, 80, 59, 43, 60, 48],
         color: (opacity = 1) => `rgba(66, 135, 245, ${opacity})`,
         strokeWidth: 2
       }
@@ -28,9 +46,13 @@ export default function plantDetailsScreen() {
           style={styles.image}
           source={require("../../assets/gardenBed.png")}
         />
-      <Text style={styles.sensorText}>Guide:</Text>
-      <Text style={styles.regularText}>Light: {plantData["plants"]["tomatoes"]["sunlight"]}</Text>
-      <Text style={styles.regularText}>Water: {plantData["plants"]["lettuce"]["water"]}</Text>
+      <View style={styles.card}>
+      <Text style={styles.sensorText}>{plantName.toUpperCase().charAt(0) + plantName.slice(1)}</Text>
+      <Text style={styles.boldText}>Sun requirements:</Text>
+      <Text style={styles.regularText}>{sunlight}</Text>
+      <Text style={styles.boldText}>Water requirements:</Text>
+      <Text style={styles.regularText}>{water}</Text>
+      </View>
       <View style={styles.bottomSection}>
         <Text style={styles.chartText}>Moisture Chart</Text>
         <LineChart
@@ -57,6 +79,18 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 
+  card: {
+    backgroundColor: "#fff", // White background
+    borderRadius: 10, // Rounded corners
+    padding: 5, // Padding for content
+    shadowColor: "#000", // Shadow for depth
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84, // Adjust shadow blur
+    elevation: 5, // Elevation for a more lifted card effect (Android)
+    marginHorizontal: 15,
+  },
+
   chartText:{
     textAlign: "center",
     fontWeight: "bold",
@@ -64,6 +98,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
 
+  },
+
+  boldText:{
+    fontWeight: "bold",
+    marginLeft: 20,
   },
 
   image: {
