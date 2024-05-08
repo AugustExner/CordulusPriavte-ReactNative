@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,26 +7,27 @@ import {
   StyleSheet,
 } from "react-native";
 
-export default function TagInputComponent() {
-  const [tags, setTags] = useState([]);
-  const [text, setText] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
-
-  const addTag = () => {
-    if (text.trim() !== "") {
-      if (editIndex !== null) {
-        // If editing an existing tag
-        const newTags = [...tags];
-        newTags[editIndex] = text.trim();
-        setTags(newTags);
-        setEditIndex(null);
-      } else {
-        // If adding a new tag
-        setTags([...tags, text.trim()]);
+export default function TagInputComponent({ tags, setTags }) {
+    const [text, setText] = useState("");
+    const [editIndex, setEditIndex] = useState(null);
+  
+    const addTag = () => {
+      if (text.trim() !== "") {
+        if (editIndex !== null) {
+          const newTags = [...tags];
+          newTags[editIndex] = text.trim();
+          setTags(newTags);
+          setEditIndex(null);
+        } else {
+          setTags([...tags, text.trim()]);
+        }
+        setText("");
       }
-      setText("");
-    }
-  };
+    };
+
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
 
   const removeTag = (index) => {
     const newTags = [...tags];

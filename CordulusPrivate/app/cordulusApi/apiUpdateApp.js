@@ -65,7 +65,11 @@ export default function updateAppPost() {
     return (
       <View style={styles.postContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.plantText}>Species: {item.plants}</Text>
+          <Text style={styles.regularText}> Gardenbed: {item.name}</Text>
+          <Text style={styles.regularText}>
+            Plants: {item.plants.join(", ")}
+          </Text>
+
           <Text style={styles.regularText}> SensorID: {item.id}</Text>
           <Text style={styles.regularText}>
             Temperature: {item.temperature}{" "}
@@ -114,6 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     alignItems: "center",
   },
+
   postContainer: {
     flexDirection: "row",
     backgroundColor: "white",

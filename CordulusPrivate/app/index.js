@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   touchButton: {
-    backgroundColor: "green",
+    backgroundColor: "lightblue",
     width: 70,
     height: 70,
     borderRadius: 20, // Set diameter as width and round corners for circle

@@ -17,11 +17,22 @@ import TagInputComponent from "./tagsInput";
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
+  const [gardenbedName, setgardenbedName] = useState("");
   const [position, setPosition] = useState("");
   const [sensorID, setSensorID] = useState("");
   const [errors, setErrors] = useState({});
   const [location, setLocation] = useState();
   const [isPosting, setIsPosting] = useState(false);
+  const [tags, setTags] = useState([]);
+
+  // A function to expose tags if needed elsewhere
+  const getTagsArray = () => {
+    return tags;
+  };
+
+  useEffect(() => {
+    console.log(tags);
+  }, [tags]);
 
   const addPost = async () => {
     setIsPosting(true);
@@ -32,19 +43,21 @@ export default function addBed() {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
+          name: gardenbedName,
           id: parseInt(sensorID),
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          plants: [plantname],
+          plants: tags,
         }),
       });
 
       console.log(
         JSON.stringify({
+          name: gardenbedName,
           id: parseInt(sensorID),
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          plants: plantname,
+          plants: tags,
         })
       );
       // Check for successful response
@@ -81,20 +94,21 @@ export default function addBed() {
   const validateForm = () => {
     let errors = {};
 
-    if (!plantname) errors.plantname = "Plantname is required";
-    if (!position) errors.position = "position is required";
-    if (!sensorID) errors.sensorID = "SensorID is required";
+    if (!gardenbedName.trim())
+      errors.gardenbedName = "Gardenbed name is required";
+    if (!sensorID.trim()) errors.sensorID = "Sensor ID is required";
+    if (!tags.length) errors.tags = "At least one plant tag is required";
 
     setErrors(errors);
-
-    return Object.keys(errors).length === 0;
+    return Object.keys(errors).length === 0; // This should return true if there are no errors
   };
 
   const handleSubmit = () => {
     const bedData = {
+      name: gardenbedName,
       plants: plantname,
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      latitude: location ? location.coords.latitude : null,
+      longitude: location ? location.coords.longitude : null,
       id: sensorID,
     };
     console.log("bedData");
@@ -103,14 +117,14 @@ export default function addBed() {
     storeID(sensorID); // Call the function to store the id
 
     if (validateForm()) {
-      console.log("Submitted", plantname, position, sensorID);
-      setPlantname("");
-      setPosition("");
+      // Only call addPost if the form is valid
+      console.log("Submitted", gardenbedName, tags, position, sensorID);
+      addPost(); // Move the addPost call inside this if block
+      setgardenbedName("");
+      setTags([]);
       setSensorID("");
       setErrors({});
     }
-    //CALL THEESE FUNCTIONS WHEN SUBMIT IS PRESSED
-    addPost();
   };
 
   return (
@@ -121,21 +135,23 @@ export default function addBed() {
           style={styles.image}
           source={require("../assets/gardenBed.png")}
         />
-
-        <Text style={styles.label}>Bed name</Text>
-
+        <Text style={styles.label}>Gardenbed</Text>
         <TextInput
           style={styles.input}
-          placeholder="Tomatoes"
-          value={plantname} //The displayed value in the TextInput will always be the same as the content of the plantname
-          onChangeText={setPlantname} //This updates the State and value of the plantname //value={plantname} makes sure the input displays the state, and onChangeText={setUsername} updates the state when the input changes.
+          placeholder="Gardenbed 1"
+          value={gardenbedName} //The displayed value in the TextInput will always be the same as the content of the plantname
+          onChangeText={setgardenbedName} //This updates the State and value of the plantname //value={plantname} makes sure the input displays the state, and onChangeText={setUsername} updates the state when the input changes.
         ></TextInput>
-        {errors.plantname ? (
-          <Text style={styles.errorText}>{errors.plantname}</Text>
+        {errors.gardenbedName ? (
+          <Text style={styles.errorText}>{errors.gardenbedName}</Text>
         ) : null}
 
         <Text style={styles.label}>Plants</Text>
-        <TagInputComponent style={styles.input} />
+        <TagInputComponent style={styles.input} tags={tags} setTags={setTags} />
+
+        {errors.tags ? (
+          <Text style={styles.errorText}>{errors.tags}</Text>
+        ) : null}
 
         <Text style={styles.label}>Sensor ID</Text>
         <TextInput
