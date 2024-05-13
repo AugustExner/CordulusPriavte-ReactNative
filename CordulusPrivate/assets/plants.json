@@ -6,7 +6,7 @@
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
         "soil": "Prefers well-drained, loose soil rich in organic matter.",
-        "best_months_for_planting": "March to May"
+        "season": "March to May"
       },
       "cucumbers": {
         "name": "Cucumber",
@@ -14,7 +14,7 @@
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
         "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
-        "best_months_for_planting": "May to July"
+        "season": "May to July"
       },
       "tomatoes": {
         "name": "Tomato",
@@ -22,7 +22,7 @@
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 2-3 times per week, especially when fruits are developing. Avoid overwatering.",
         "soil": "Prefers well-drained, nutrient-rich soil with a pH of 6.0-6.8.",
-        "best_months_for_planting": "April to June"
+        "season": "April to June"
       },
       "onions": {
         "name": "Onion",
@@ -30,7 +30,7 @@
         "sunlight": "Thrives in full sun (6-8 hours daily)",
         "water": "Requires watering 1-2 times per week, allowing the soil to dry slightly between waterings.",
         "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
-        "best_months_for_planting": "March to May"
+        "season": "March to May"
       },
       "peppers": {
         "name": "Pepper",
@@ -38,7 +38,7 @@
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 2-3 times per week, allowing the soil to dry slightly between waterings.",
         "soil": "Prefers well-drained, sandy loam soil with a pH of 6.0-6.8.",
-        "best_months_for_planting": "April to June"
+        "season": "April to June"
       },
       "lettuce": {
         "name": "Lettuce",
@@ -46,7 +46,7 @@
         "sunlight": "Thrives in partial shade (4-6 hours daily)",
         "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
         "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
-        "best_months_for_planting": "March to May, August to September"
+        "season": "March to May, August to September"
       },
       "strawberries": {
         "name": "Strawberry",
@@ -54,7 +54,7 @@
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy. Avoid overwatering the crown.",
         "soil": "Prefers well-drained, slightly acidic soil rich in organic matter.",
-        "best_months_for_planting": "April to June"
+        "season": "April to June"
       }
     }
   }
