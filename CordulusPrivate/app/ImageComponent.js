@@ -80,6 +80,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid black',
+    backgroundColor: 'red',
+    width: 50,
+    height: 50,
+    zIndex: 2,
+    
   },
   cameraIcon: {
     fontSize: 30, // Adjust icon size as needed

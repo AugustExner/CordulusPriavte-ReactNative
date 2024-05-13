@@ -2,7 +2,7 @@
     "plants": {
       "carrots": {
         "name": "Carrot",
-        "image": "path/to/carrot_image.png",
+        "image": "/imagesPlants/Carrots.png",
         "sunlight": "Requires full sun (6-8 hours daily)",
         "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
         "soil": "Prefers well-drained, loose soil rich in organic matter.",

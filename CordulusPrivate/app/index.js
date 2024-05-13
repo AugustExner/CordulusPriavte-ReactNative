@@ -27,7 +27,6 @@ export default function HomePage() {
       <Text style={styles.titleText}>Private</Text>
       <Text style={styles.baseText}>Rethinking Irrigation </Text>
       <ImageComponent>
-        
       </ImageComponent>
       <ContinueButton
         text="Add Garden Bed"
