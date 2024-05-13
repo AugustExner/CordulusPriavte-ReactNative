@@ -11,11 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import ContinueButton from "../../components/continueButton";
-
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
-
-import { Link, router } from "expo-router";
 import { useState, useEffect, useCallback, useId } from "react";
 
 export default function updateAppPost() {
@@ -62,27 +58,60 @@ export default function updateAppPost() {
     } else if (item.moisture > highMoistureThreshold) {
       moistureTextStyle = styles.highMoistureText;
     }
+
     return (
       <View style={styles.postContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.regularText}> Gardenbed: {item.name}</Text>
-          <Text style={styles.regularText}>
-            Plants: {item.plants.join(", ")}
-          </Text>
-
-          <Text style={styles.regularText}> SensorID: {item.id}</Text>
-          <Text style={styles.regularText}>
-            Temperature: {item.temperature}{" "}
-          </Text>
-          <Text style={styles.regularText}> Humidity: {item.humidity}</Text>
-
-          <View style={styles.rowContainer}>
-            <Text style={moistureTextStyle}> Moisture: {item.moisture}</Text>
+          <View style={styles.imageContainer}>
             <Image
               style={styles.image}
               source={require("../../assets/gardenBed.png")}
             />
           </View>
+
+          <View style={styles.nameContainer}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.regularText}> Gardenbed:</Text>
+              <Text style={styles.nameContainerText}> {item.name} </Text>
+            </View>
+
+            <View style={styles.columnContainer}>
+              <Text style={styles.regularText}> Plants:</Text>
+              <Text style={styles.nameContainerText}>
+                {" "}
+                {item.plants.join(", ")}{" "}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.sensorContainer}>
+            <View style={styles.rowContainer}>
+              <Text style={styles.regularSensorText}> SensorID:</Text>
+              <Text style={styles.itemData}> {item.id} </Text>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <Text style={styles.regularSensorText}> Temperature:</Text>
+              <Text style={styles.itemData}> {item.temperature} </Text>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <Text style={styles.regularSensorText}> Humidity:</Text>
+              <Text style={styles.itemData}> {item.humidity} </Text>
+            </View>
+
+            <View style={styles.rowContainer}>
+              <Text style={moistureTextStyle}> Moisture:</Text>
+              <Text style={styles.itemData}> {item.moisture} </Text>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => clearAsyncStorage()}
+          >
+            <Text style={styles.deleteButtonText}>X</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -104,10 +133,11 @@ export default function updateAppPost() {
 
       <TouchableOpacity
         style={styles.touchButton}
-        onPress={() => clearAsyncStorage()}
+        onPress={() => fetchData()}
       >
-        <Text style={styles.buttonText}>Delete All</Text>
+        <Text style={styles.buttonText}>Update All</Text>
       </TouchableOpacity>
+      
     </SafeAreaView>
   );
 }
@@ -128,13 +158,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 18, // Add margin between cards if needed
     shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   textContainer: {
     flex: 1,
@@ -155,46 +178,115 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   image: {
-    width: 24,
-    height: 24,
-    marginLeft: 170,
+    width: 70,
+    height: 70,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 18,
+    marginTop: 18,
   },
 
   regularText: {
     marginBottom: 8,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   lowMoistureText: {
     color: "red",
-    fontSize: 16,
-  },
-  highMoistureText: {
-    color: "blue",
-    fontSize: 16,
+    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   rowContainer: {
     flexDirection: "row",
+  },
+  columnContainer: {
+    flexDirection: "column",
   },
 
   touchButton: {
     backgroundColor: "black",
     width: 120,
     height: 70,
-    borderRadius: 20, // Set diameter as width and round corners for circle
-
+    borderRadius: 20,
     position: "absolute", // Remove from normal flow
     bottom: 32, // Position from bottom
-
     right: 20, // Position from right
     alignItems: "center", // Center content horizontally
     justifyContent: "center", // Center content vertically
+  },
+
+  deleteButton: {
+    backgroundColor: "white",
+    width: 18,
+    height: 18,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "red",
+    position: "absolute", // Remove from normal flow
+    right: 10, // Position from right
+    alignItems: "center", // Center content horizontally
+    justifyContent: "center", // Center content vertically
+  },
+  deleteButtonText: {
+    fontSize: 8,
+    color: "red",
+    fontWeight: "bold",
   },
   buttonText: {
     fontSize: 18,
     color: "white",
     fontWeight: "bold",
+  },
+
+  highMoistureText: {
+    color: "blue",
+    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+
+  itemData: {
+    position: "absolute", // Remove from normal flow
+    right: 10, // Position from right
+    fontSize: 18,
+    color: "#0C2340",
+  },
+
+  regularSensorText: {
+    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0C2340",
+  },
+
+  sensorContainer: {
+    marginTop: 18,
+    backgroundColor: "#B0C4DE",
+
+    borderRadius: 10,
+    paddingTop: 8,
+    paddingLeft: 8,
+  },
+  nameContainer: {
+    backgroundColor: "#E1EBEE",
+    paddingTop: 8,
+    paddingLeft: 8,
+    borderRadius: 10,
+  },
+
+  nameContainerText: {
+    position: "absolute", // Remove from normal flow
+    right: 10, // Position from right
+    fontSize: 18,
   },
 });

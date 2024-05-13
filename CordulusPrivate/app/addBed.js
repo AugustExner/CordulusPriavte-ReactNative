@@ -9,11 +9,15 @@ import {
   Button,
   Image,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
+
 import * as Location from "expo-location";
+import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
 import TagInputComponent from "./tagsInput";
+
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -24,11 +28,6 @@ export default function addBed() {
   const [location, setLocation] = useState();
   const [isPosting, setIsPosting] = useState(false);
   const [tags, setTags] = useState([]);
-
-  // A function to expose tags if needed elsewhere
-  const getTagsArray = () => {
-    return tags;
-  };
 
   useEffect(() => {
     console.log(tags);
@@ -124,6 +123,8 @@ export default function addBed() {
       setTags([]);
       setSensorID("");
       setErrors({});
+    
+      router.push("./cordulusApi/apiUpdateApp");
     }
   };
 
@@ -165,13 +166,15 @@ export default function addBed() {
           <Text style={styles.errorText}>{errors.sensorID}</Text>
         ) : null}
 
-        <Button
-          title="Add garden bed"
-          color="black"
+        <TouchableOpacity
+          style={styles.touchButton}
           onPress={() => {
             handleSubmit();
+            
           }}
-        />
+        >
+          <Text style={styles.buttonText}>Add Gardenbed</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -220,5 +223,23 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     marginBottom: 10,
+  },
+
+  touchButton: {
+    backgroundColor: "lightblue",
+    height: 50,
+    borderRadius: 5, // Set diameter as width and round corners for circle
+    borderWidth: 2,
+    borderColor: "black",
+    bottom: 0, // Position from bottom
+    justifyContent: "center",
+    marginBottom: 18,
+    alignItems: "center"
+  },
+
+  buttonText: {
+    color: "#000",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

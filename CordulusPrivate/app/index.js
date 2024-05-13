@@ -13,7 +13,7 @@ import { Link, router } from "expo-router";
 export default function HomePage() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="lightgrey" />
+      <StatusBar backgroundColor="white" />
       <View style={styles.headerContainer}>
         <Text style={styles.titleText}>Cordulus </Text>
         <Text style={styles.titleText}>Private</Text>
@@ -50,11 +50,13 @@ const styles = StyleSheet.create({
     marginBottom: 400,
   },
   titleText: {
+    color: "black",
     fontSize: 80,
     fontWeight: "bold",
     marginBottom: -20,
   },
   baseText: {
+    color: "black",
     fontSize: 24,
     fontWeight: "regular",
     marginTop: 0,
