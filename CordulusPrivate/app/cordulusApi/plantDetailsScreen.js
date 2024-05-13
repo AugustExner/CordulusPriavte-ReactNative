@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import plantData from "../../assets/plants.json";
@@ -7,6 +7,10 @@ import { useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 
 export default function plantDetailsScreen() {
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [clickedValue, setClickedValue] = useState(null);
+  const [clickedDate, setClickedDate] = useState(null);
 
   const screenWidth = Dimensions.get("window").width;
   const {plantName, history} = useLocalSearchParams();
@@ -78,9 +82,10 @@ console.log(averageMoistureByDate);
       {
         data: relativeDates.map(date => averageMoistureByDate[date] || null),
         color: (opacity = 1) => `rgba(66, 135, 245, ${opacity})`,
-        strokeWidth: 2
+        strokeWidth: 2,
       }
     ],
+    legend: ["Daily Average Moisture"]
 };
 
   return (
@@ -111,8 +116,32 @@ console.log(averageMoistureByDate);
           yAxisSuffix={"%"}
           fromZero={true}
           bezier={true}
+          onDataPointClick={({ value, index }) => {
+            const clickedDate = relativeDates[index];
+            setClickedValue(value);
+            setClickedDate(clickedDate);
+            setModalVisible(true);
+          }}
         />
       </View>
+      <Modal animationType="slide" transparent={true} visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Date: {clickedDate}</Text>
+            <Text style={styles.modalText}>Moisture: {clickedValue}%</Text>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -164,6 +193,42 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginLeft: 20, 
     marginRight: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  closeButton: {
+    backgroundColor: "#2196F3",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  closeButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });
 
