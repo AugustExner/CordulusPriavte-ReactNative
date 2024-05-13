@@ -11,13 +11,13 @@ export default function plantDetailsScreen() {
   const screenWidth = Dimensions.get("window").width;
   const {plantName, history} = useLocalSearchParams();
 
+  const { sunlight, water, soil, season } = getPlantData(plantName);
+
   let readings = JSON.parse(history);
-  const now = new Date().toISOString().substring(0,10);
+
+  console.log("Chart");
+
   const days = [-3, -2, -1, 0, 1, 2, 3, 4, 5];
-
-  console.log("plant details");
-  console.log("today:" + now);
-
   const relativeDates = days.map(day => {
     const today = new Date();
     const date = new Date(today);
@@ -28,16 +28,16 @@ export default function plantDetailsScreen() {
   console.log(relativeDates);
  
   // Iterate through readings and group moisture values by date
-const moistureByDate = {};
-readings.forEach(reading => {
-  const readingDate = reading.time.substring(0, 10);
-  if (relativeDates.includes(readingDate)) {
+  const moistureByDate = {};
+  readings.forEach(reading => {
+    const readingDate = reading.time.substring(0, 10);
+    if (relativeDates.includes(readingDate)) {
     if (!moistureByDate[readingDate]) {
-      moistureByDate[readingDate] = [];
+        moistureByDate[readingDate] = [];
+      }
+      moistureByDate[readingDate].push(reading.moisture);
     }
-    moistureByDate[readingDate].push(reading.moisture);
-  }
-});
+  });
 
 console.log(moistureByDate);
 
@@ -71,8 +71,6 @@ console.log(averageMoistureByDate);
       season: "Data not available",
     };
   }
-  
-  const { sunlight, water, soil, season } = getPlantData(plantName);
 
   const data = {
     labels: ["-3", "-2","-1", "Today", "+2", "+3", "+4", "+5"],
