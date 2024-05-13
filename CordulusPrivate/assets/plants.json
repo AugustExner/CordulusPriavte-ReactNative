@@ -3,56 +3,59 @@
       "carrots": {
         "name": "Carrot",
         "image": "path/to/carrot_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, especially during hot weather. Avoid overwatering."
+        "sunlight": "Requires full sun (6-8 hours daily)",
+        "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
+        "soil": "Prefers well-drained, loose soil rich in organic matter.",
+        "best_months_for_planting": "March to May"
       },
       "cucumbers": {
         "name": "Cucumber",
         "image": "path/to/cucumber_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, keeping the soil moist but not soggy."
+        "sunlight": "Requires full sun (6-8 hours daily)",
+        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
+        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+        "best_months_for_planting": "May to July"
       },
       "tomatoes": {
         "name": "Tomato",
         "image": "path/to/tomato_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, especially when fruits are developing. Avoid overwatering."
+        "sunlight": "Requires full sun (6-8 hours daily)",
+        "water": "Requires watering 2-3 times per week, especially when fruits are developing. Avoid overwatering.",
+        "soil": "Prefers well-drained, nutrient-rich soil with a pH of 6.0-6.8.",
+        "best_months_for_planting": "April to June"
       },
       "onions": {
         "name": "Onion",
         "image": "path/to/onion_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Moderate watering, allowing the soil to dry slightly between waterings."
-      },
-      "basil": {
-        "name": "Basil",
-        "image": "path/to/basil_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, keeping the soil moist but not soggy."
+        "sunlight": "Thrives in full sun (6-8 hours daily)",
+        "water": "Requires watering 1-2 times per week, allowing the soil to dry slightly between waterings.",
+        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+        "best_months_for_planting": "March to May"
       },
       "peppers": {
         "name": "Pepper",
         "image": "path/to/pepper_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, allowing the soil to dry slightly between waterings."
+        "sunlight": "Requires full sun (6-8 hours daily)",
+        "water": "Requires watering 2-3 times per week, allowing the soil to dry slightly between waterings.",
+        "soil": "Prefers well-drained, sandy loam soil with a pH of 6.0-6.8.",
+        "best_months_for_planting": "April to June"
       },
       "lettuce": {
         "name": "Lettuce",
         "image": "path/to/lettuce_image.png",
-        "sunlight": "Partial shade (4-6 hours daily)",
-        "water": "Regular watering, keeping the soil moist but not soggy."
-      },
-      "spinach": {
-        "name": "Spinach",
-        "image": "path/to/spinach_image.png",
-        "sunlight": "Partial shade (4-6 hours daily)",
-        "water": "Regular watering, keeping the soil moist but not soggy."
+        "sunlight": "Thrives in partial shade (4-6 hours daily)",
+        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
+        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+        "best_months_for_planting": "March to May, August to September"
       },
       "strawberries": {
         "name": "Strawberry",
         "image": "path/to/strawberry_image.png",
-        "sunlight": "Full sun (6-8 hours daily)",
-        "water": "Regular watering, keeping the soil moist but not soggy. Avoid overwatering the crown."
+        "sunlight": "Requires full sun (6-8 hours daily)",
+        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy. Avoid overwatering the crown.",
+        "soil": "Prefers well-drained, slightly acidic soil rich in organic matter.",
+        "best_months_for_planting": "April to June"
       }
     }
   }
+  
