@@ -8,7 +8,9 @@ import { useLocalSearchParams } from "expo-router";
 export default function plantDetailsScreen() {
 
   const screenWidth = Dimensions.get("window").width;
-  const {plantName} = useLocalSearchParams();
+  const {plantName, history} = useLocalSearchParams();
+
+  console.log(history);
 
   function getPlantData(plantName) {
     const lowerCaseName = plantName.toLowerCase();
