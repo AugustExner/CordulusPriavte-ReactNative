@@ -60,6 +60,7 @@ export const readSensorArray1 = async () => {
 export const readSensorArray = async () => {
   try {
     const value = await AsyncStorage.getItem("sensorArray");
+    
     if (value !== null) {
       sensorStringArray = JSON.parse(value);
       sensorIntArray = sensorStringArray.map(Number);

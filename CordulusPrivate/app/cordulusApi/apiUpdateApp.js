@@ -9,8 +9,10 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
+import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
 
@@ -45,7 +47,55 @@ export default function updateAppPost() {
     console.log("PostData--->", postData);
   }, [postData]);
 
+  const deleteButtonAlert = (id, garden) =>
+    Alert.alert("Delete Gardenbed", garden, [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "DELETE",
+        onPress: () => deleteGardenbed(id).then(() => fetchData()),
+      },
+    ]);
+
+  const forecastingRain = () => {
+    const today = new Date();
+    const date = today.toISOString().substring(0, 10);
+    console.log(date);
+  };
+
   const renderItem = ({ item }) => {
+    const todaysRain = [];
+    const today = new Date();
+    const date = today.toISOString().substring(0, 10);
+    console.log(date);
+
+    let reading = item.forecast;
+    //console.log("Reading", reading.forecast)
+    reading.forEach((object) => {
+      const readingDate = object.timestamp.substring(0, 10);
+      console.log(readingDate);
+
+      if (readingDate.includes(date)) {
+        if (!todaysRain[readingDate]) {
+          todaysRain[readingDate] = [];
+        }
+        console.log("object.rain -->", object.rain);
+        todaysRain.push(object.rain);
+      }
+    });
+    console.log("TodaysRain-->", todaysRain);
+
+    let totalRain = 0;
+
+    for (let i = 0; i < todaysRain.length; i++) {
+      totalRain += todaysRain[i];
+    }
+
+    console.log(totalRain);
+
     // Define a threshold for low moisture level
     const lowMoistureThreshold = 30;
     const highMoistureThreshold = 60;
@@ -104,11 +154,19 @@ export default function updateAppPost() {
               <Text style={moistureTextStyle}> Moisture:</Text>
               <Text style={styles.itemData}> {item.moisture} </Text>
             </View>
+
+            <View style={styles.rowContainer}>
+              <Text style={styles.regularSensorText}> Todays rain:</Text>
+              <Text style={styles.itemData}> {totalRain} </Text>
+            </View>
           </View>
 
           <TouchableOpacity
             style={styles.deleteButton}
-            onPress={() => clearAsyncStorage()}
+            //onPress={() => clearAsyncStorage()}
+            onPress={() => {
+              deleteButtonAlert(item.id, item.name);
+            }}
           >
             <Text style={styles.deleteButtonText}>X</Text>
           </TouchableOpacity>
@@ -131,13 +189,9 @@ export default function updateAppPost() {
         }
       />
 
-      <TouchableOpacity
-        style={styles.touchButton}
-        onPress={() => fetchData()}
-      >
-        <Text style={styles.buttonText}>Update All</Text>
+      <TouchableOpacity style={styles.touchButton} onPress={() => fetchData()}>
+        <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
-      
     </SafeAreaView>
   );
 }
@@ -155,7 +209,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 320,
     borderRadius: 8,
-    borderWidth: 2,
+    borderWidth: 3,
     marginBottom: 18, // Add margin between cards if needed
     shadowColor: "black",
   },
@@ -184,10 +238,10 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 70,
-    height: 70,
+    width: 90,
+    height: 90,
     borderRadius: 100,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: "black",
     marginBottom: 18,
     marginTop: 18,
@@ -277,8 +331,9 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingLeft: 8,
   },
+
   nameContainer: {
-    backgroundColor: "#E1EBEE",
+    backgroundColor: "skyblue",
     paddingTop: 8,
     paddingLeft: 8,
     borderRadius: 10,
@@ -288,5 +343,6 @@ const styles = StyleSheet.create({
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
     fontSize: 18,
+    maxWidth: 200,
   },
 });
