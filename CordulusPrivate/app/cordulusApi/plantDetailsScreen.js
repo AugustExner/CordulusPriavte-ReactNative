@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, Modal, TouchableOpacity } from "react-native";
-import { Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet, Modal, TouchableOpacity, Button } from "react-native";
+import { Dimensions, Linking } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import plantData from "../../assets/plants.json";
 import { useLocalSearchParams } from "expo-router";
@@ -105,6 +105,27 @@ console.log(averageMoistureByDate);
       <Text style={styles.regularText}>{soil}</Text>
       <Text style={styles.boldText}>Season:</Text>
       <Text style={styles.regularText}>{season}</Text>
+      <View style={styles.icon}>
+      <TouchableOpacity onPress={() => {
+        const lowerCasedPlantName = plantName.charAt(0).toLowerCase() + plantName.slice(1);
+        const dyrkSearchUrl = `https://dyrk.nu/afgroeder/${lowerCasedPlantName}`;
+        Linking.openURL(dyrkSearchUrl);
+      }}>
+          <Image source={require("../../assets/dyrk.nu.png")} style={styles.buttonIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+            const googleSearchUrl = `https://www.google.com/search?q=${plantName}`;
+            Linking.openURL(googleSearchUrl);
+        }}>
+          <Image source={require("../../assets/google.png")} style={styles.buttonIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+            const wikiSearchUrl = `https://da.wikipedia.org/wiki/${plantName}`;
+            Linking.openURL(wikiSearchUrl);
+        }}>
+          <Image source={require("../../assets/Wiki.png")} style={styles.buttonIcon} />
+        </TouchableOpacity>
+      </View>
       </View>
       <View style={styles.bottomSection}>
         <Text style={styles.chartText}>Moisture Chart</Text>
@@ -154,6 +175,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     fontSize: 18,
     margin: 20,
+  },
+
+  icon: {
+    flexDirection: "row", // This is already there
+    justifyContent: 'flex-end', // Aligns icons to the right
+    alignItems: 'flex-end', // Aligns icons to the bottom (already set)
+  },
+
+  buttonIcon: {
+    borderRadius: 20,
+    margin: 2,
+    width: 20,
+    height: 20,
   },
 
   card: {
