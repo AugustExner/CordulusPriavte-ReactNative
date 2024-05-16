@@ -37,12 +37,17 @@ export default function ImageComponent({ setImage }) {
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.circularButton} onPress={takePhoto}>
-          <Feather name="camera" style={styles.cameraIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.circularButton} onPress={pickImage}>
-          <AntDesign name="picture" style={styles.uploadIcon} />
-        </TouchableOpacity>
+        <View style={styles.cameraIconContainer}>
+          <TouchableOpacity style={styles.circularButton} onPress={takePhoto}>
+            <Feather name="camera" style={styles.cameraIcon} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.uploadIconContainer}>
+          <TouchableOpacity style={styles.circularButton} onPress={pickImage}>
+            <AntDesign name="picture" style={styles.uploadIcon} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -54,13 +59,15 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     marginTop: 32,
     flex: 1,
-    alignItems: "space-between",
+    alignItems: "center",
   },
 
   circularButton: {
-    borderRadius: 50, // Adjust button size as needed
+    borderRadius: 25, // Adjust button size as needed
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: "black",
     backgroundColor: "lightgrey",
     width: 50,
     height: 50,
@@ -86,5 +93,17 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     marginBottom: 10,
+  },
+  cameraIconContainer: {
+    justifyContent: "center",
+    alignItems:"center",
+    marginLeft: 220,
+    marginBottom: 90,
+  },
+  uploadIconContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 220,
+    marginBottom: 90,
   },
 });

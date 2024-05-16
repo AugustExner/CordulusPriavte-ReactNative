@@ -211,15 +211,6 @@ export default function addBed() {
         >
           <Text style={styles.buttonText}>Add Gardenbed/Submit</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.touchButton}
-          onPress={() => {
-            downloadImage();
-          }}
-        >
-          <Text style={styles.buttonText}>Download</Text>
-        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -265,7 +256,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 10,
     borderRadius: 200,
-    borderWidth: 3,
+    borderWidth: 4,
     borderColor: "black",
   },
   errorText: {
@@ -274,11 +265,11 @@ const styles = StyleSheet.create({
   },
 
   touchButton: {
-    backgroundColor: "lightblue",
+    backgroundColor: "black",
     height: 50,
-    borderRadius: 5, // Set diameter as width and round corners for circle
+    borderRadius: 10, // Set diameter as width and round corners for circle
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "white",
     bottom: 0, // Position from bottom
     justifyContent: "center",
     marginBottom: 18,
@@ -286,7 +277,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "#000",
+    color: "white",
     fontSize: 16,
     fontWeight: "bold",
   },

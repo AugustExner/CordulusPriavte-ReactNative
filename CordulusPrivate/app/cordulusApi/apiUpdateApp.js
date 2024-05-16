@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-
+import {router} from "expo-router";
 import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
@@ -76,13 +76,13 @@ export default function updateAppPost() {
     //console.log("Reading", reading.forecast)
     reading.forEach((object) => {
       const readingDate = object.timestamp.substring(0, 10);
-    //  console.log(readingDate);
+      //  console.log(readingDate);
 
       if (readingDate.includes(date)) {
         if (!todaysRain[readingDate]) {
           todaysRain[readingDate] = [];
         }
-      //  console.log("object.rain -->", object.rain);
+        //  console.log("object.rain -->", object.rain);
         todaysRain.push(object.rain);
       }
     });
@@ -113,10 +113,14 @@ export default function updateAppPost() {
       <View style={styles.postContainer}>
         <View style={styles.textContainer}>
           <View style={styles.imageContainer}>
-            <Image
-              style={styles.image}
-              source={{ uri: item.imageUri }}
-            />
+            <TouchableOpacity onPress={()=>{
+              router.push({
+                pathname: "./plantDetailsScreen",
+                params: { plantName: item.plants, history: JSON.stringify(item.history), forecast: JSON.stringify(item.forecast)}
+              })
+            }}>
+              <Image style={styles.image} source={{ uri: item.imageUri }} />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.nameContainer}>
