@@ -54,7 +54,7 @@ export default function updateAppPost() {
     <Pressable onPress={() => {
       router.push({
         pathname:'./plantDetailsScreen',
-        params: { plantName: item.plants, history: JSON.stringify(item.history)},
+        params: { plantName: item.plants, history: JSON.stringify(item.history), forecast: JSON.stringify(item.forecast)},
       })
     }}>
     <View style={styles.postContainer}>
