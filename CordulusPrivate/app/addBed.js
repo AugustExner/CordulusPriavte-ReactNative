@@ -211,6 +211,8 @@ export default function addBed() {
         >
           <Text style={styles.buttonText}>Add Gardenbed/Submit</Text>
         </TouchableOpacity>
+        
+        
       </View>
     </KeyboardAvoidingView>
   );

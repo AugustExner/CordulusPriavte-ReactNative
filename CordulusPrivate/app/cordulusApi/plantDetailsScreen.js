@@ -13,7 +13,7 @@ export default function plantDetailsScreen() {
   const [clickedDate, setClickedDate] = useState(null);
 
   const screenWidth = Dimensions.get("window").width;
-  const {plantName, history, forecast} = useLocalSearchParams();
+  const {plantName, history, forecast, imageUri, gardenBedName} = useLocalSearchParams();
 
   const { sunlight, water, soil, season } = getPlantData(plantName);
 
@@ -130,10 +130,10 @@ export default function plantDetailsScreen() {
 
   return (
     <View>
-      <Text style={styles.chartText}>{plantName}</Text>
+      <Text style={styles.chartText}>{gardenBedName}</Text>
       <Image
           style={styles.image}
-          source={require("../../assets/gardenBed.png")}
+          source={{ uri: imageUri }}
         />
       <View style={styles.card}>
       <Text style={styles.sensorText}>{plantName.toUpperCase().charAt(0) + plantName.slice(1)}</Text>
@@ -244,10 +244,14 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
+    borderRadius: 100,
+    borderWidth: 3,
+    borderColor: "black",
+    marginBottom: 18,
+    marginTop: 18,
     alignSelf: "center",
-    marginBottom: 10,
   },
 
   regularText: {

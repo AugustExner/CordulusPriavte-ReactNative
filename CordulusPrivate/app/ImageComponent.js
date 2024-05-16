@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
     borderRadius: 25, // Adjust button size as needed
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "black",
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
     width: 50,
     height: 50,
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   cameraIconContainer: {
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     marginLeft: 220,
     marginBottom: 90,
   },
