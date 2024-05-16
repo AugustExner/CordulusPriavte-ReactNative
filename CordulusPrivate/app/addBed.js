@@ -13,11 +13,12 @@ import {
 } from "react-native";
 
 import * as Location from "expo-location";
+import * as FileSystem from "expo-file-system";
 import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
 import TagInputComponent from "./tagsInput";
-
+import ImageComponent from "./ImageComponent";
 
 export default function addBed() {
   const [plantname, setPlantname] = useState("");
@@ -28,6 +29,10 @@ export default function addBed() {
   const [location, setLocation] = useState();
   const [isPosting, setIsPosting] = useState(false);
   const [tags, setTags] = useState([]);
+
+  const [gardenImage, setGardenImage] = useState(null);
+
+  const [localURI, setLocalURI] = useState();
 
   useEffect(() => {
     console.log(tags);
@@ -47,6 +52,7 @@ export default function addBed() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           plants: tags,
+          image: localURI,
         }),
       });
 
@@ -57,6 +63,7 @@ export default function addBed() {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           plants: tags,
+          image: localURI,
         })
       );
       // Check for successful response
@@ -88,7 +95,7 @@ export default function addBed() {
       //console.log("Latitude: " + currentLocation.coords.latitude +" Longitude: " + currentLocation.coords.longitude);
     };
     getPermissions();
-  });
+  }, []); // Add dependency array to prevent infinite loop
 
   const validateForm = () => {
     let errors = {};
@@ -102,29 +109,52 @@ export default function addBed() {
     return Object.keys(errors).length === 0; // This should return true if there are no errors
   };
 
-  const handleSubmit = () => {
-    const bedData = {
-      name: gardenbedName,
-      plants: plantname,
-      latitude: location ? location.coords.latitude : null,
-      longitude: location ? location.coords.longitude : null,
-      id: sensorID,
-    };
-    console.log("bedData");
-    console.log(bedData);
+  useEffect(() => {
+    downloadImage();
+  }, [gardenImage]);
 
-    storeID(sensorID); // Call the function to store the id
+  const handleSubmit = async () => {
+    try {
+      await downloadImage();
 
-    if (validateForm()) {
-      // Only call addPost if the form is valid
-      console.log("Submitted", gardenbedName, tags, position, sensorID);
-      addPost(); // Move the addPost call inside this if block
-      setgardenbedName("");
-      setTags([]);
-      setSensorID("");
-      setErrors({});
-    
-      router.push("./cordulusApi/apiUpdateApp");
+      if (validateForm()) {
+        storeID(sensorID); // Call the function to store the id
+        // Only call addPost if the form is valid
+        console.log("Submitted", gardenbedName, tags, position, sensorID);
+        await addPost(); // Move the addPost call inside this if block
+        setgardenbedName("");
+        setTags([]);
+        setSensorID("");
+        setErrors({});
+
+        router.push("./cordulusApi/apiUpdateApp");
+      }
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+    }
+  };
+
+  const downloadImage = async () => {
+    if (!gardenImage) {
+      console.log("No image to download");
+      return;
+    }
+    console.log("GardenImage --> ", gardenImage);
+    // Define the file path and name for the saved image
+    const fileName = gardenImage.split("/").pop(); // Extract the filename from the URI
+    const localUri = `${FileSystem.documentDirectory}${fileName}`;
+
+    try {
+      await FileSystem.copyAsync({
+        from: gardenImage,
+        to: localUri,
+      });
+      // Log the download result
+      console.log("Image downloaded to:", localUri);
+      setLocalURI(localUri);
+    } catch (error) {
+      console.error("Error downloading the image:", error);
+      alert("Failed to save image");
     }
   };
 
@@ -134,8 +164,15 @@ export default function addBed() {
       <View style={styles.form}>
         <Image
           style={styles.image}
-          source={require("../assets/gardenBed.png")}
+          source={
+            gardenImage
+              ? { uri: gardenImage }
+              : require("../assets/gardenBed.png")
+          }
         />
+
+        <ImageComponent setImage={setGardenImage} />
+
         <Text style={styles.label}>Gardenbed</Text>
         <TextInput
           style={styles.input}
@@ -170,10 +207,18 @@ export default function addBed() {
           style={styles.touchButton}
           onPress={() => {
             handleSubmit();
-            
           }}
         >
-          <Text style={styles.buttonText}>Add Gardenbed</Text>
+          <Text style={styles.buttonText}>Add Gardenbed/Submit</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.touchButton}
+          onPress={() => {
+            downloadImage();
+          }}
+        >
+          <Text style={styles.buttonText}>Download</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -215,10 +260,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   image: {
-    width: 300,
+    width: 200,
     height: 200,
     alignSelf: "center",
     marginBottom: 10,
+    borderRadius: 200,
+    borderWidth: 3,
+    borderColor: "black",
   },
   errorText: {
     color: "red",
@@ -234,7 +282,7 @@ const styles = StyleSheet.create({
     bottom: 0, // Position from bottom
     justifyContent: "center",
     marginBottom: 18,
-    alignItems: "center"
+    alignItems: "center",
   },
 
   buttonText: {

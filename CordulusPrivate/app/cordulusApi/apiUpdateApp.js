@@ -70,23 +70,23 @@ export default function updateAppPost() {
     const todaysRain = [];
     const today = new Date();
     const date = today.toISOString().substring(0, 10);
-    console.log(date);
+    //console.log(date);
 
     let reading = item.forecast;
     //console.log("Reading", reading.forecast)
     reading.forEach((object) => {
       const readingDate = object.timestamp.substring(0, 10);
-      console.log(readingDate);
+    //  console.log(readingDate);
 
       if (readingDate.includes(date)) {
         if (!todaysRain[readingDate]) {
           todaysRain[readingDate] = [];
         }
-        console.log("object.rain -->", object.rain);
+      //  console.log("object.rain -->", object.rain);
         todaysRain.push(object.rain);
       }
     });
-    console.log("TodaysRain-->", todaysRain);
+    //console.log("TodaysRain-->", todaysRain);
 
     let totalRain = 0;
 
@@ -115,7 +115,7 @@ export default function updateAppPost() {
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
-              source={require("../../assets/gardenBed.png")}
+              source={{ uri: item.imageUri }}
             />
           </View>
 
