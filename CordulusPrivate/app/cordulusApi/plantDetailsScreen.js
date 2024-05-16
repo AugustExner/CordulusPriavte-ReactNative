@@ -20,8 +20,6 @@ export default function plantDetailsScreen() {
   let readings = JSON.parse(history);
   let rain = JSON.parse(forecast);
 
-  console.log("Chart");
-
   //get the dates of the chart
   const days = [-3, -2, -1, 0, 1, 2, 3];
   const relativeDates = days.map(day => {
@@ -44,7 +42,8 @@ export default function plantDetailsScreen() {
       moistureByDate[readingDate].push(reading.moisture);
     }
   });
-  console.log("moisture: " + moistureByDate);
+  console.log("moistByDate");
+  console.log(moistureByDate);
 
   // Calculate average moisture value for each day
   const averageMoistureByDate = {};
@@ -53,7 +52,9 @@ export default function plantDetailsScreen() {
     const averageMoisture = _.mean(moistureValues);
     averageMoistureByDate[date] = averageMoisture;
   });
-  console.log("avg moist: " + averageMoistureByDate);
+
+  console.log("avgMoisture");
+  console.log(averageMoistureByDate);
 
   //
   const rainByDate = {};
@@ -66,25 +67,35 @@ export default function plantDetailsScreen() {
         rainByDate[readingDate] += reading.rain;
     }
   });
-  console.log("rain: " + rainByDate);
+  console.log("RainByDate");
+  console.log(rainByDate);
 
 
   const rainToMoisture = {};
   for (const date in rainByDate) {
     rainToMoisture[date] = rainByDate[date] * 0.4;
   }
-  console.log("rainToMoisture:" + rainToMoisture);
+  console.log("rainToMoisture");
+  console.log(rainToMoisture);
 
 
   // Calculate the difference between yesterday (-1) and today (0)
   const yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
   const todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
+  const dryingRatio = 0;
   const difference = todayMoisture - yesterdayMoisture;
+  if(difference < 0){
+    dryingRatio = difference; 
+  } else{
+    console.log("Ratio is positive");
+  }
+
+  
 
   const predictedMoisture = {
-    [relativeDates[4]]: todayMoisture + difference + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
-    [relativeDates[5]]: todayMoisture + 2 * difference + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
-    [relativeDates[6]]: todayMoisture + 3 * difference + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
+    [relativeDates[4]]: todayMoisture + dryingRatio + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
+    [relativeDates[5]]: todayMoisture + 2 * dryingRatio + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
+    [relativeDates[6]]: todayMoisture + 3 * dryingRatio + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
   }
 
 
@@ -113,13 +124,13 @@ export default function plantDetailsScreen() {
     datasets: [
       {
         data: [
-          averageMoistureByDate[relativeDates[0]] || null, // -3
-          averageMoistureByDate[relativeDates[1]] || null, // -2
-          averageMoistureByDate[relativeDates[2]] || null, // -1
-          averageMoistureByDate[relativeDates[3]] || null, // Today (0)
-          predictedMoisture[relativeDates[4]], // +1
-          predictedMoisture[relativeDates[5]], // +2
-          predictedMoisture[relativeDates[6]] // +3
+          averageMoistureByDate[relativeDates[0]] || 0, // -3
+          averageMoistureByDate[relativeDates[1]] || 0, // -2
+          averageMoistureByDate[relativeDates[2]] || 0, // -1
+          averageMoistureByDate[relativeDates[3]] || 0, // Today (0)
+          predictedMoisture[relativeDates[4]] || 0, // +1
+          predictedMoisture[relativeDates[5]] || 0, // +2
+          predictedMoisture[relativeDates[6]] || 0 // +3
         ],
         color: (opacity = 1) => `rgba(66, 135, 245, ${opacity})`,
         strokeWidth: 2,
