@@ -13,7 +13,7 @@ export default function plantDetailsScreen() {
   const [clickedDate, setClickedDate] = useState(null);
 
   const screenWidth = Dimensions.get("window").width;
-  const {plantName, history, forecast, imageUri, gardenBedName} = useLocalSearchParams();
+  const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture} = useLocalSearchParams();
 
   const { sunlight, water, soil, season } = getPlantData(plantName);
 
@@ -31,7 +31,6 @@ export default function plantDetailsScreen() {
     return date.toISOString().substring(0,10);
   });
 
-  console.log("chart days: " + relativeDates);
  
   // Iterate through readings and group moisture values by date
   const moistureByDate = {};
@@ -44,7 +43,9 @@ export default function plantDetailsScreen() {
       moistureByDate[readingDate].push(reading.moisture);
     }
   });
-  console.log("moisture: " + moistureByDate);
+  
+  console.log("Moisture:");
+  console.log(moistureByDate);
 
   // Calculate average moisture value for each day
   const averageMoistureByDate = {};
@@ -53,7 +54,9 @@ export default function plantDetailsScreen() {
     const averageMoisture = _.mean(moistureValues);
     averageMoistureByDate[date] = averageMoisture;
   });
-  console.log("avg moist: " + averageMoistureByDate);
+
+  console.log("avg moist");
+  console.log(averageMoistureByDate);
 
   //
   const rainByDate = {};
@@ -66,25 +69,39 @@ export default function plantDetailsScreen() {
         rainByDate[readingDate] += reading.rain;
     }
   });
-  console.log("rain: " + rainByDate);
+
+  console.log("rain");
+  console.log(rainByDate);
 
 
   const rainToMoisture = {};
   for (const date in rainByDate) {
     rainToMoisture[date] = rainByDate[date] * 0.4;
   }
-  console.log("rainToMoisture:" + rainToMoisture);
+
+  console.log("rainRatio");
+  console.log(rainToMoisture);
 
 
-  // Calculate the difference between yesterday (-1) and today (0)
   const yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
   const todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
+  const dryingRatio = 0;
   const difference = todayMoisture - yesterdayMoisture;
+  if(difference < 0){
+    dryingRatio = difference; 
+  } else{
+    console.log("Ratio is positive");
+  }
+
+
+
+  let minMoistureDivider = targetMoisture < 60 ? 4 : 3;
+  let minMoisture = targetMoisture / minMoistureDivider;
 
   const predictedMoisture = {
-    [relativeDates[4]]: todayMoisture + difference + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
-    [relativeDates[5]]: todayMoisture + 2 * difference + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
-    [relativeDates[6]]: todayMoisture + 3 * difference + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
+    [relativeDates[4]]: todayMoisture + dryingRatio + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
+    [relativeDates[5]]: todayMoisture + 2 * dryingRatio + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
+    [relativeDates[6]]: todayMoisture + 3 * dryingRatio + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
   }
 
 
@@ -169,7 +186,21 @@ export default function plantDetailsScreen() {
       </View>
       <View style={styles.bottomSection}>
         <Text style={styles.chartText}>Moisture Chart</Text>
-        
+        <LineChart
+          data={data}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+          yAxisSuffix={"%"}
+          fromZero={true}
+          bezier={true}
+          onDataPointClick={({ value, index }) => {
+            const clickedDate = relativeDates[index];
+            setClickedValue(value);
+            setClickedDate(clickedDate);
+            setModalVisible(true);
+          }}
+        />
       </View>
       <Modal animationType="slide" transparent={true} visible={modalVisible}
         onRequestClose={() => {

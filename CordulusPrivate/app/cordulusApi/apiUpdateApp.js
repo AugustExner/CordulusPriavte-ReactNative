@@ -116,7 +116,7 @@ export default function updateAppPost() {
             <TouchableOpacity onPress={()=>{
               router.push({
                 pathname: "./plantDetailsScreen",
-                params: { plantName: item.plants, history: JSON.stringify(item.history), forecast: JSON.stringify(item.forecast), imageUri: item.imageUri, gardenBedName: item.name}
+                params: { plantName: item.plants, history: JSON.stringify(item.history), forecast: JSON.stringify(item.forecast), imageUri: item.imageUri, gardenBedName: item.name, targetMoisture: item.targetMoisture}
               })
             }}>
               <Image style={styles.image} source={{ uri: item.imageUri }} />
