@@ -24,8 +24,6 @@ export default function plantDetailsScreen() {
 
   const screenWidth = Dimensions.get("window").width;
   const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture} = useLocalSearchParams();
-  const { plantName, history, forecast, imageUri, gardenBedName } =
-    useLocalSearchParams();
 
   const { sunlight, water, soil, season } = getPlantData(plantName);
 
@@ -90,9 +88,12 @@ export default function plantDetailsScreen() {
     rainToMoisture[date] = rainByDate[date] * 0.4;
   }
 
-  const yesterdayMoisture = averageMoistureByDate[relativeDates[2]];
-  const todayMoisture = averageMoistureByDate[relativeDates[3]];
-  const difference = todayMoisture - yesterdayMoisture;
+
+  // Calculate the difference between yesterday (-1) and today (0)
+  let yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
+  let todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
+  let dryingRatio = 0;
+  let difference = todayMoisture - yesterdayMoisture;
   if(difference < 0){
     dryingRatio = difference; 
   } else{
@@ -130,13 +131,6 @@ export default function plantDetailsScreen() {
       season: "Data not available",
     };
   }
-    [relativeDates[4]]:
-      todayMoisture + difference + (rainToMoisture[relativeDates[4]] || 0),
-    [relativeDates[5]]:
-      todayMoisture + 2 * difference + (rainToMoisture[relativeDates[5]] || 0),
-    [relativeDates[6]]:
-      todayMoisture + 3 * difference + (rainToMoisture[relativeDates[6]] || 0),
-  };
 
   const data = {
     labels: ["-3", "-2", "-1", "Today", "+1", "+2", "+3"],
