@@ -189,7 +189,7 @@ export default function updateAppPost() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="white" />
-      <Text style={styles.headerText}>My Plants</Text>
+      <Text style={styles.headerText}>Gardenbeds</Text>
       <FlatList
         style={styles.flatList}
         data={postData}

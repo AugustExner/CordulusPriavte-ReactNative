@@ -104,10 +104,15 @@ export default function addBed() {
   const validateForm = () => {
     let errors = {};
 
-    if (!gardenbedName.trim())
-      errors.gardenbedName = "Gardenbed name is required";
+    if (!gardenbedName.trim())errors.gardenbedName = "Gardenbed name is required";
+
     if (!sensorID.trim()) errors.sensorID = "Sensor ID is required";
+
     if (!tags.length) errors.tags = "At least one plant tag is required";
+
+    if(!gardenImage) errors.image = "You need to add an image "
+
+
 
     setErrors(errors);
     return Object.keys(errors).length === 0; // This should return true if there are no errors
@@ -164,7 +169,7 @@ export default function addBed() {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <StatusBar backgroundColor="lightgrey" />
+      <StatusBar backgroundColor="white" />
       <View style={styles.form}>
         <Image
           style={styles.image}
@@ -177,6 +182,10 @@ export default function addBed() {
 
         <ImageComponent setImage={setGardenImage} />
 
+        {errors.image ? (
+          <Text style={styles.errorText}>{errors.image}</Text>
+        ) : null}
+
         <Text style={styles.label}>Gardenbed</Text>
         <TextInput
           style={styles.input}
@@ -184,6 +193,7 @@ export default function addBed() {
           value={gardenbedName} //The displayed value in the TextInput will always be the same as the content of the plantname
           onChangeText={setgardenbedName} //This updates the State and value of the plantname //value={plantname} makes sure the input displays the state, and onChangeText={setUsername} updates the state when the input changes.
         ></TextInput>
+        
         {errors.gardenbedName ? (
           <Text style={styles.errorText}>{errors.gardenbedName}</Text>
         ) : null}
