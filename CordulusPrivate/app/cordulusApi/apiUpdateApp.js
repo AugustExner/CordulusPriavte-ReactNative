@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import {router} from "expo-router";
+import { router } from "expo-router";
 import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
@@ -113,22 +113,30 @@ export default function updateAppPost() {
       <View style={styles.postContainer}>
         <View style={styles.textContainer}>
           <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={()=>{
-              router.push({
-                pathname: "./plantDetailsScreen",
-                params: { plantName: item.plants, history: JSON.stringify(item.history), forecast: JSON.stringify(item.forecast), imageUri: item.imageUri, gardenBedName: item.name, targetMoisture: item.targetMoisture}
-              })
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                router.push({
+                  pathname: "./plantDetailsScreen",
+                  params: {
+                    plantName: item.plants,
+                    history: JSON.stringify(item.history),
+                    forecast: JSON.stringify(item.forecast),
+                    imageUri: item.imageUri,
+                    gardenBedName: item.name, 
+                    targetMoisture: item.targetMoisture,
+                  },
+                });
+              }}
+            >
               <Image style={styles.image} source={{ uri: item.imageUri }} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.nameContainer}>
-            <View style={styles.rowContainer}>
-              <Text style={styles.regularText}> Gardenbed:</Text>
-              <Text style={styles.nameContainerText}> {item.name} </Text>
-            </View>
+          <View style={styles.rowContainerBed}>
+            <Text style={styles.bedNameText}> {item.name} </Text>
+          </View>
 
+          <View style={styles.nameContainer}>
             <View style={styles.columnContainer}>
               <Text style={styles.regularText}> Plants:</Text>
               <Text style={styles.nameContainerText}>
@@ -177,14 +185,14 @@ export default function updateAppPost() {
         </View>
       </View>
     );
-  };
+  };    
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="lightgrey" />
-      <Text style={styles.headerText}>My Plants</Text>
+      <StatusBar backgroundColor="white" />
+      <Text style={styles.headerText}>Gardenbeds</Text>
       <FlatList
-        style={{ marginBottom: 130 }}
+        style={styles.flatList}
         data={postData}
         renderItem={renderItem}
         keyExtractor={generateRandomNumber} // Unique key for each item
@@ -203,29 +211,34 @@ export default function updateAppPost() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
     alignItems: "center",
   },
 
   postContainer: {
-    flexDirection: "row",
-    backgroundColor: "white",
-    padding: 10,
     width: 320,
-    borderRadius: 8,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginHorizontal: 15,
+    marginBottom: 24,
     borderWidth: 3,
-    marginBottom: 18, // Add margin between cards if needed
-    shadowColor: "black",
+    borderColor: "lightgrey",
   },
   textContainer: {
     flex: 1,
   },
 
   headerText: {
-    marginBottom: 24,
+    marginBottom: 12,
     marginTop: 24,
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: 24,
   },
 
   plantText: {
@@ -267,6 +280,12 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: "row",
   },
+  rowContainerBed: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
   columnContainer: {
     flexDirection: "column",
   },
@@ -327,6 +346,14 @@ const styles = StyleSheet.create({
     color: "#0C2340",
   },
 
+  bedNameText: {
+    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0C2340",
+    alignSelf: "center",
+  },
+
   sensorContainer: {
     marginTop: 18,
     backgroundColor: "#B0C4DE",
@@ -349,4 +376,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     maxWidth: 200,
   },
+
+  flatList:{
+    marginBottom: 130,
+  }
 });
