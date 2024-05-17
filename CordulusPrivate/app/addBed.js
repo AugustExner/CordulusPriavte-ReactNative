@@ -18,6 +18,7 @@ import { router } from "expo-router";
 import { useState, useEffect } from "react";
 import { storeID } from "./sensorStorage";
 import TagInputComponent from "./tagsInput";
+
 import ImageComponent from "./ImageComponent";
 
 export default function addBed() {
@@ -33,6 +34,9 @@ export default function addBed() {
   const [gardenImage, setGardenImage] = useState(null);
 
   const [localURI, setLocalURI] = useState();
+
+
+
 
   useEffect(() => {
     console.log(tags);
@@ -224,12 +228,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 20,
-    backgroundColor: "lightgrey",
+    backgroundColor: "white",
   },
   form: {
     backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "lightgrey",
     shadowColor: "black",
     shadowOffset: {
       width: 0,

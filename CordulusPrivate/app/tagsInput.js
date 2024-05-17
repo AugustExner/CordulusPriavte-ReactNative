@@ -7,6 +7,8 @@ import {
   StyleSheet,
 } from "react-native";
 
+
+
 export default function TagInputComponent({ tags, setTags }) {
     const [text, setText] = useState("");
     const [editIndex, setEditIndex] = useState(null);
