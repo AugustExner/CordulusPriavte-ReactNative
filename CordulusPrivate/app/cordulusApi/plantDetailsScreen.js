@@ -23,9 +23,11 @@ export default function plantDetailsScreen() {
   const [plantArray, setPlantArray] = useState([]);
 
   const screenWidth = Dimensions.get("window").width;
-  const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture} = useLocalSearchParams();
+  const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture: targetMoistureString} = useLocalSearchParams();
 
   const { sunlight, water, soil, season } = getPlantData(plantName);
+  
+  const targetMoisture = parseInt(targetMoistureString, 10);
 
   const addPlantsToPlantArray = () => {
     let plants = plantName.split(",");
@@ -101,16 +103,44 @@ export default function plantDetailsScreen() {
   }
 
 
-
   let minMoistureDivider = targetMoisture < 60 ? 4 : 3;
   let minMoisture = targetMoisture / minMoistureDivider;
+  
+  
+  let tomorrowMoisture = todayMoisture + dryingRatio;
+  console.log("Initial tomorrowMoisture:", tomorrowMoisture);
+  
+  if (tomorrowMoisture < minMoisture) {
+      tomorrowMoisture = targetMoisture;
+      console.log("water +1");
+  }
+  console.log("Final tomorrowMoisture:", tomorrowMoisture);
+  
+  let plusTwoMoisture = tomorrowMoisture + dryingRatio;
+  console.log("Initial plusTwoMoisture:", plusTwoMoisture);
+  
+  if (plusTwoMoisture < minMoisture) {
+      plusTwoMoisture = targetMoisture;
+      console.log("water +2");
+  }
+  console.log("Final plusTwoMoisture:", plusTwoMoisture);
+  
+  let plusThreeMoisture = plusTwoMoisture + dryingRatio;
+  console.log("Initial plusThreeMoisture:", plusThreeMoisture);
+  
+  if (plusThreeMoisture < minMoisture) {
+      plusThreeMoisture = targetMoisture;
+      console.log("water +3");
+  }
+  console.log("Final plusThreeMoisture:", plusThreeMoisture);
 
   const predictedMoisture = {
-    [relativeDates[4]]: todayMoisture + dryingRatio + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
-    [relativeDates[5]]: todayMoisture + 2 * dryingRatio + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
-    [relativeDates[6]]: todayMoisture + 3 * dryingRatio + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
+    [relativeDates[4]]: tomorrowMoisture + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
+    [relativeDates[5]]: plusTwoMoisture + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
+    [relativeDates[6]]: plusThreeMoisture + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
   }
-
+  console.log("predict");
+  console.log(predictedMoisture);
 
   function getPlantData(plantName) {
     const lowerCaseName = plantName.toLowerCase();
