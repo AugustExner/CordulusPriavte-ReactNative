@@ -25,7 +25,8 @@ export default function plantDetailsScreen() {
   const screenWidth = Dimensions.get("window").width;
   const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture: targetMoistureString} = useLocalSearchParams();
 
-  const { sunlight, water, soil, season } = getPlantData(plantName);
+  const { englishName, danishName, sunlight, water, soil, season } = getPlantData(plantName);
+  const plantNameForUrl = englishName !== "Data not available" ? englishName : danishName;
   
   const targetMoisture = parseInt(targetMoistureString, 10);
 
@@ -112,7 +113,7 @@ export default function plantDetailsScreen() {
   
   if (tomorrowMoisture < minMoisture) {
       tomorrowMoisture = targetMoisture;
-      console.log("water +1");
+      console.log("automatic water: day +1");
   }
   console.log("Final tomorrowMoisture:", tomorrowMoisture);
   
@@ -121,7 +122,7 @@ export default function plantDetailsScreen() {
   
   if (plusTwoMoisture < minMoisture) {
       plusTwoMoisture = targetMoisture;
-      console.log("water +2");
+      console.log("automatic water: day +2");
   }
   console.log("Final plusTwoMoisture:", plusTwoMoisture);
   
@@ -130,7 +131,7 @@ export default function plantDetailsScreen() {
   
   if (plusThreeMoisture < minMoisture) {
       plusThreeMoisture = targetMoisture;
-      console.log("water +3");
+      console.log("automatic water: day +3");
   }
   console.log("Final plusThreeMoisture:", plusThreeMoisture);
 
