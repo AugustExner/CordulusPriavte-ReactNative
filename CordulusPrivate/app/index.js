@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Link, router } from "expo-router";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function HomePage() {
   return (
@@ -24,14 +25,14 @@ export default function HomePage() {
         style={styles.touchButtonMyPlants}
         onPress={() => router.push("./cordulusApi/apiUpdateApp")}
       >
-        <Text style={styles.plantsText}>My plants</Text>
+        <Text style={styles.plantsText}>Garden Beds</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.touchButton}
         onPress={() => router.push("./addBed")}
       >
-        <Text style={styles.buttonText}>+</Text>
+        <AntDesign name="plus" style={styles.buttonText}/>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -54,12 +55,14 @@ const styles = StyleSheet.create({
     fontSize: 80,
     fontWeight: "bold",
     marginBottom: -20,
+    
   },
   baseText: {
     color: "#222222",
     fontSize: 24,
     fontWeight: "regular",
     marginTop: 0,
+    lineHeight: 40,
   },
   buttonStyle: {
     justifyContent: "flex-end",
@@ -89,10 +92,10 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Center content vertically
   },
 
-  plantsText: {
-    fontSize: 20,
-    color: "#F2F2F2",
-    fontWeight: "bold",
+  plantsText:{
+    fontSize: 24,
+    color: '#F2F2F2',
+    fontWeight: "regular",
   },
 
   buttonText: {
