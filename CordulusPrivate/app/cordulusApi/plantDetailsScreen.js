@@ -9,6 +9,7 @@ import {
   Button,
   FlatList,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { Dimensions, Linking } from "react-native";
 import { LineChart } from "react-native-chart-kit";
@@ -23,11 +24,20 @@ export default function plantDetailsScreen() {
   const [plantArray, setPlantArray] = useState([]);
 
   const screenWidth = Dimensions.get("window").width;
-  const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture: targetMoistureString} = useLocalSearchParams();
+  const {
+    plantName,
+    history,
+    forecast,
+    imageUri,
+    gardenBedName,
+    targetMoisture: targetMoistureString,
+  } = useLocalSearchParams();
 
-  const { englishName, danishName, sunlight, water, soil, season } = getPlantData(plantName);
-  const plantNameForUrl = englishName !== "Data not available" ? englishName : danishName;
-  
+  const { englishName, danishName, sunlight, water, soil, season } =
+    getPlantData(plantName);
+  const plantNameForUrl =
+    englishName !== "Data not available" ? englishName : danishName;
+
   const targetMoisture = parseInt(targetMoistureString, 10);
 
   const addPlantsToPlantArray = () => {
@@ -48,7 +58,6 @@ export default function plantDetailsScreen() {
     return date.toISOString().substring(0, 10);
   });
 
- 
   // Iterate through readings and group moisture values by date
   const moistureByDate = {};
   readings.forEach((reading) => {
@@ -85,61 +94,59 @@ export default function plantDetailsScreen() {
   console.log("rain");
   console.log(rainByDate);
 
-
   const rainToMoisture = {};
   for (const date in rainByDate) {
     rainToMoisture[date] = rainByDate[date] * 0.4;
   }
-
 
   // Calculate the difference between yesterday (-1) and today (0)
   let yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
   let todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
   let dryingRatio = 0;
   let difference = todayMoisture - yesterdayMoisture;
-  if(difference < 0){
-    dryingRatio = difference; 
-  } else{
+  if (difference < 0) {
+    dryingRatio = difference;
+  } else {
     console.log("Ratio is positive");
   }
 
-
   let minMoistureDivider = targetMoisture < 60 ? 4 : 3;
   let minMoisture = targetMoisture / minMoistureDivider;
-  
-  
+
   let tomorrowMoisture = todayMoisture + dryingRatio;
   console.log("Initial tomorrowMoisture:", tomorrowMoisture);
-  
+
   if (tomorrowMoisture < minMoisture) {
-      tomorrowMoisture = targetMoisture;
-      console.log("automatic water: day +1");
+    tomorrowMoisture = targetMoisture;
+    console.log("automatic water: day +1");
   }
   console.log("Final tomorrowMoisture:", tomorrowMoisture);
-  
+
   let plusTwoMoisture = tomorrowMoisture + dryingRatio;
   console.log("Initial plusTwoMoisture:", plusTwoMoisture);
-  
+
   if (plusTwoMoisture < minMoisture) {
-      plusTwoMoisture = targetMoisture;
-      console.log("automatic water: day +2");
+    plusTwoMoisture = targetMoisture;
+    console.log("automatic water: day +2");
   }
   console.log("Final plusTwoMoisture:", plusTwoMoisture);
-  
+
   let plusThreeMoisture = plusTwoMoisture + dryingRatio;
   console.log("Initial plusThreeMoisture:", plusThreeMoisture);
-  
+
   if (plusThreeMoisture < minMoisture) {
-      plusThreeMoisture = targetMoisture;
-      console.log("automatic water: day +3");
+    plusThreeMoisture = targetMoisture;
+    console.log("automatic water: day +3");
   }
   console.log("Final plusThreeMoisture:", plusThreeMoisture);
 
   const predictedMoisture = {
-    [relativeDates[4]]: tomorrowMoisture + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
+    [relativeDates[4]]:
+      tomorrowMoisture + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
     [relativeDates[5]]: plusTwoMoisture + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
-    [relativeDates[6]]: plusThreeMoisture + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
-  }
+    [relativeDates[6]]:
+      plusThreeMoisture + rainToMoisture[relativeDates[6] || 0], // Index 6 corresponds to +3
+  };
   console.log("predict");
   console.log(predictedMoisture);
 
@@ -151,11 +158,11 @@ export default function plantDetailsScreen() {
           sunlight: plantData["plants"][key]["sunlight"],
           water: plantData["plants"][key]["water"],
           soil: plantData["plants"][key]["soil"],
-          season: plantData["plants"][key]["season"]
+          season: plantData["plants"][key]["season"],
         };
       }
     }
-    return { 
+    return {
       sunlight: "Data not available",
       water: "Data not available",
       soil: "Data not available",
@@ -188,7 +195,7 @@ export default function plantDetailsScreen() {
     return (
       <SafeAreaView>
         <View style={styles.card}>
-          <Text style={styles.sensorText}>{item}</Text>
+          <Text style={styles.sensorText} >{item}</Text>
           <Text style={styles.boldText}>Sun:</Text>
           <Text style={styles.regularText}>{sunlight}</Text>
           <Text style={styles.boldText}>Water:</Text>
@@ -240,63 +247,68 @@ export default function plantDetailsScreen() {
   };
 
   return (
-    <FlatList
-      data={plantArray}
-      renderItem={renderItem}
-      keyExtractor={(item) => item}
-      horizontal={false} 
-      ListHeaderComponent={() => (
-        <>
-          <Image style={styles.image} source={{ uri: imageUri }} />
-          <Text style={styles.chartText}>{gardenBedName}</Text>
-        </>
-      )}
-      ListFooterComponent={() => (
-        <View style={[styles.card, styles.centerChart]}>
-          <Text style={styles.chartText}>Moisture Chart</Text>
-          <LineChart
-            data={data}
-            width={screenWidth - 60}
-            height={220}
-            chartConfig={chartConfig}
-            yAxisSuffix={"%"}
-            fromZero={true}
-            bezier={true}
-            style={styles.lineChart}
-            onDataPointClick={({ value, index }) => {
-              const clickedDate = relativeDates[index];
-              setClickedValue(value);
-              setClickedDate(clickedDate);
-              setModalVisible(true);
-            }}
-          />
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(false);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Date: {clickedDate}</Text>
-                <Text style={styles.modalText}>Moisture: {clickedValue}%</Text>
-                <Text style={styles.miniText}>
-                  Predicted moisture: Delta(yesterday-today) + (4* mm rain)
-                </Text>
-                <TouchableOpacity
-                  style={styles.closeButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="#F2F2F2" />
+      <FlatList
+        data={plantArray}
+        renderItem={renderItem}
+        keyExtractor={(item) => item}
+        horizontal={false}
+        ListHeaderComponent={() => (
+          <>
+            <Image style={styles.image} source={{ uri: imageUri }} />
+            <Text style={styles.chartText}>{gardenBedName}</Text>
+          </>
+        )}
+        ListFooterComponent={() => (
+          <View style={[styles.card, styles.centerChart]}>
+            <Text style={styles.chartText2}>Moisture Chart</Text>
+            <LineChart
+              data={data}
+              width={screenWidth - 60}
+              height={220}
+              chartConfig={chartConfig}
+              yAxisSuffix={"%"}
+              fromZero={true}
+              bezier={true}
+              style={styles.lineChart}
+              onDataPointClick={({ value, index }) => {
+                const clickedDate = relativeDates[index];
+                setClickedValue(value);
+                setClickedDate(clickedDate);
+                setModalVisible(true);
+              }}
+            />
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(false);
+              }}
+            >
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>Date: {clickedDate}</Text>
+                  <Text style={styles.modalText}>
+                    Moisture: {clickedValue}%
+                  </Text>
+                  <Text style={styles.miniText}>
+                    Predicted moisture: Delta(yesterday-today) + (4* mm rain)
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.closeButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.closeButtonText}>Close</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          </Modal>
-        </View>
-      )}
-    />
+            </Modal>
+          </View>
+        )}
+      />
+    </View>
   );
 }
 
@@ -321,6 +333,10 @@ function getPlantData(plantName) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#f2f2f2",
+  },
+
   sensorText: {
     marginBottom: 5,
     fontWeight: "bold",
@@ -328,6 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     fontSize: 18,
     margin: 20,
+    color: "hsl(159, 60%, 20%)",
   },
   icon: {
     flexDirection: "row",
@@ -341,8 +358,10 @@ const styles = StyleSheet.create({
     height: 20,
   },
   card: {
-    backgroundColor: "#fff",
+    alignSelf: "center",
+    backgroundColor: "#f2f2f2",
     borderWidth: 3,
+    width: 360,
     borderColor: "lightgrey",
     borderRadius: 10,
     padding: 5,
@@ -356,21 +375,36 @@ const styles = StyleSheet.create({
   },
   chartText: {
     textAlign: "center",
+    justifyContent: "center",
     fontWeight: "bold",
     fontSize: 24,
     marginTop: 20,
     marginBottom: 20,
+    color: "hsl(159, 60%, 20%)",
+
+    alignSelf: "center",
   },
+  chartText2: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 24,
+    marginTop: 20,
+    marginBottom: 20,
+    color: "#2196F3",
+    alignSelf: "center",
+  },
+
   boldText: {
     fontWeight: "bold",
     marginLeft: 20,
+    color: "#222222",
   },
   image: {
     width: 140,
     height: 140,
     borderRadius: 100,
     borderWidth: 3,
-    borderColor: "black",
+    borderColor: "hsl(159, 60%, 20%)",
     marginBottom: 18,
     marginTop: 18,
     alignSelf: "center",
@@ -379,6 +413,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginLeft: 20,
     marginRight: 20,
+
+    color: "#222222",
   },
   centeredView: {
     flex: 1,
@@ -418,8 +454,11 @@ const styles = StyleSheet.create({
   },
   centerChart: {
     alignItems: "center",
+
+    alignSelf: "center",
   },
   lineChart: {
+    alignSelf: "center",
     marginVertical: 8,
     borderRadius: 16,
   },
@@ -429,9 +468,9 @@ const styles = StyleSheet.create({
 });
 
 const chartConfig = {
-  backgroundGradientFrom: "#fff",
+  backgroundGradientFrom: "#f2f2f2",
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: "#fff",
+  backgroundGradientTo: "#f2f2f2",
   backgroundGradientToOpacity: 0.5,
   color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
   strokeWidth: 3,

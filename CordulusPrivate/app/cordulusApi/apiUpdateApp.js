@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
 
   postContainer: {
-    width: 320,
+    width: 360,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
