@@ -13,7 +13,7 @@ export default class App extends React.Component {
         tagsArray: [],
       },
       tagsColor: mainColor,
-      tagsText: "#fff",
+      tagsText: "#F2F2F2",
     };
   }
 
@@ -31,7 +31,7 @@ export default class App extends React.Component {
           tags={this.state.tags}
           placeholder="Tags..."
           label="Press comma & space to add a tag"
-          labelStyle={{ color: "#fff" }}
+          labelStyle={{ color: "#F2F2F2" }}
           leftElement={
             <Icon
               name={"tag-multiple"}
@@ -47,10 +47,10 @@ export default class App extends React.Component {
           ]}
           inputStyle={{ color: this.state.tagsText }}
           onFocus={() =>
-            this.setState({ tagsColor: "#fff", tagsText: mainColor })
+            this.setState({ tagsColor: "#F2F2F2", tagsText: mainColor })
           }
           onBlur={() =>
-            this.setState({ tagsColor: mainColor, tagsText: "#fff" })
+            this.setState({ tagsColor: mainColor, tagsText: "#F2F2F2" })
           }
           autoCorrect={false}
           tagStyle={styles.tag}
@@ -71,14 +71,14 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    borderColor: "white",
+    borderColor: "#F2F2F2",
     borderWidth: 1,
     marginTop: 8,
     borderRadius: 5,
     padding: 3,
   },
   tag: {
-    backgroundColor: "#fff",
+    backgroundColor: "hsl(159, 60%, 20%)",
   },
   tagText: {
     color: mainColor,

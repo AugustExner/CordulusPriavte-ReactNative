@@ -165,7 +165,7 @@ export default function addBed() {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <StatusBar backgroundColor="white" />
+      <StatusBar backgroundColor="#F2F2F2" />
       <View style={styles.form}>
         <Image
           style={styles.image}
@@ -182,10 +182,10 @@ export default function addBed() {
           <Text style={styles.errorText}>{errors.image}</Text>
         ) : null}
 
-        <Text style={styles.label}>Gardenbed</Text>
+        <Text style={styles.label}>Garden Bed</Text>
         <TextInput
           style={styles.input}
-          placeholder="Gardenbed 1"
+          placeholder="Garden Bed 1"
           value={gardenbedName} //The displayed value in the TextInput will always be the same as the content of the plantname
           onChangeText={setgardenbedName} //This updates the State and value of the plantname //value={plantname} makes sure the input displays the state, and onChangeText={setUsername} updates the state when the input changes.
         ></TextInput>
@@ -219,7 +219,7 @@ export default function addBed() {
             handleSubmit();
           }}
         >
-          <Text style={styles.buttonText}>Add Gardenbed</Text>
+          <Text style={styles.buttonText}>Add Garden Bed</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -232,15 +232,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     paddingHorizontal: 20,
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
   },
   form: {
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
     padding: 20,
     borderRadius: 10,
     borderWidth: 3,
     borderColor: "lightgrey",
-    shadowColor: "black",
+    shadowColor: "#222222",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "black",
+    borderColor: "hsl(159, 60%, 20%)",
     borderWidth: 2,
     marginBottom: 15,
     padding: 10,
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 200,
     borderWidth: 4,
-    borderColor: "black",
+    borderColor: "hsl(159, 60%, 20%)",
   },
   errorText: {
     color: "red",
@@ -276,11 +276,11 @@ const styles = StyleSheet.create({
   },
 
   touchButton: {
-    backgroundColor: "black",
+    backgroundColor: "#222222",
     height: 50,
     borderRadius: 10, // Set diameter as width and round corners for circle
     borderWidth: 2,
-    borderColor: "white",
+    borderColor: "#F2F2F2",
     bottom: 0, // Position from bottom
     justifyContent: "center",
     marginBottom: 18,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: "white",
+    color: "#F2F2F2",
     fontSize: 16,
     fontWeight: "bold",
   },

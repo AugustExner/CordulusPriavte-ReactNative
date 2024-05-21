@@ -13,7 +13,7 @@ import { Link, router } from "expo-router";
 export default function HomePage() {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="white" />
+      <StatusBar backgroundColor="#F2F2F2" />
       <View style={styles.headerContainer}>
         <Text style={styles.titleText}>Cordulus </Text>
         <Text style={styles.titleText}>Private</Text>
@@ -24,14 +24,14 @@ export default function HomePage() {
         style={styles.touchButtonMyPlants}
         onPress={() => router.push("./cordulusApi/apiUpdateApp")}
       >
-        <Text style={styles.buttonText}>My plants</Text>
+        <Text style={styles.plantsText}>My plants</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.touchButton}
         onPress={() => router.push("./addBed")}
       >
-        <Text style={styles.buttonText}>Add +</Text>
+        <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -40,7 +40,7 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: '#F2F2F2',
     paddingTop: StatusBar.currentHeight,
     paddingHorizontal: 18,
     alignContent: "center",
@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     marginBottom: 400,
   },
   titleText: {
-    color: "black",
+    color: "hsl(159, 60%, 20%)",
     fontSize: 80,
     fontWeight: "bold",
     marginBottom: -20,
   },
   baseText: {
-    color: "black",
+    color: "#222222",
     fontSize: 24,
     fontWeight: "regular",
     marginTop: 0,
@@ -65,12 +65,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   touchButton: {
-    backgroundColor: "lightblue",
+    backgroundColor: 'hsl(159, 60%, 20%)',
     width: 70,
     height: 70,
     borderRadius: 20, // Set diameter as width and round corners for circle
-    borderWidth: 3,
-    borderColor: "black",
     position: "absolute", // Remove from normal flow
     bottom: 32, // Position from bottom
 
@@ -78,23 +76,29 @@ const styles = StyleSheet.create({
     alignItems: "center", // Center content horizontally
     justifyContent: "center", // Center content vertically
   },
-  buttonText: {
-    fontSize: 18,
-    color: "black",
-    fontWeight: "bold",
-  },
 
   touchButtonMyPlants: {
-    backgroundColor: "white",
+    backgroundColor: "hsl(159, 60%, 20%)",
     width: 240,
     height: 70,
     borderRadius: 20, // Set diameter as width and round corners for circle
-    borderWidth: 3,
-    borderColor: "black",
     position: "absolute", // Remove from normal flow
     bottom: 32, // Position from bottom
     left: 20, // Position from right
     alignItems: "center", // Center content horizontally
     justifyContent: "center", // Center content vertically
   },
+
+  plantsText:{
+    fontSize: 20,
+    color: '#F2F2F2',
+    fontWeight: "bold",
+  },
+
+  buttonText: {
+    fontSize: 40,
+    color: '#F2F2F2',
+    fontWeight: "bold",
+  },
+
 });

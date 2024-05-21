@@ -67,18 +67,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 3,
-    borderColor: "black",
-    backgroundColor: "white",
+    borderColor: "hsl(159, 60%, 20%)",
+    backgroundColor: "#F2F2F2",
     width: 50,
     height: 50,
   },
   cameraIcon: {
     fontSize: 30, // Adjust icon size as needed
-    color: "black", // Adjust icon color as desired
+    color: "#222222", // Adjust icon color as desired
   },
   uploadIcon: {
     fontSize: 30, // Adjust icon size as
-    color: "black",
+    color: "#222222",
   },
   iconContainer: {
     flex: 1,
