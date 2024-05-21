@@ -314,6 +314,7 @@ const styles = StyleSheet.create({
     borderColor: "red",
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
+    top: 10,
     alignItems: "center", // Center content horizontally
     justifyContent: "center", // Center content vertically
   },
