@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 220,
-    marginBottom: 90,
+    marginBottom: 80,
   },
   uploadIconContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginRight: 220,
-    marginBottom: 90,
+    marginBottom: 80,
   },
 });

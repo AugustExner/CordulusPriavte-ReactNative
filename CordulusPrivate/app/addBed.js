@@ -35,9 +35,6 @@ export default function addBed() {
 
   const [localURI, setLocalURI] = useState();
 
-
-
-
   useEffect(() => {
     console.log(tags);
   }, [tags]);
@@ -104,15 +101,14 @@ export default function addBed() {
   const validateForm = () => {
     let errors = {};
 
-    if (!gardenbedName.trim())errors.gardenbedName = "Gardenbed name is required";
+    if (!gardenbedName.trim())
+      errors.gardenbedName = "Gardenbed name is required";
 
     if (!sensorID.trim()) errors.sensorID = "Sensor ID is required";
 
     if (!tags.length) errors.tags = "At least one plant tag is required";
 
-    if(!gardenImage) errors.image = "You need to add an image "
-
-
+    if (!gardenImage) errors.image = "You need to add an image ";
 
     setErrors(errors);
     return Object.keys(errors).length === 0; // This should return true if there are no errors
@@ -193,7 +189,7 @@ export default function addBed() {
           value={gardenbedName} //The displayed value in the TextInput will always be the same as the content of the plantname
           onChangeText={setgardenbedName} //This updates the State and value of the plantname //value={plantname} makes sure the input displays the state, and onChangeText={setUsername} updates the state when the input changes.
         ></TextInput>
-        
+
         {errors.gardenbedName ? (
           <Text style={styles.errorText}>{errors.gardenbedName}</Text>
         ) : null}
@@ -223,10 +219,8 @@ export default function addBed() {
             handleSubmit();
           }}
         >
-          <Text style={styles.buttonText}>Add Gardenbed/Submit</Text>
+          <Text style={styles.buttonText}>Add Gardenbed</Text>
         </TouchableOpacity>
-        
-        
       </View>
     </KeyboardAvoidingView>
   );
@@ -272,7 +266,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignSelf: "center",
-    marginBottom: 10,
     borderRadius: 200,
     borderWidth: 4,
     borderColor: "black",
