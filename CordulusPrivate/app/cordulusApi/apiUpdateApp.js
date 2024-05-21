@@ -356,7 +356,8 @@ const styles = StyleSheet.create({
   sensorContainer: {
     marginTop: 18,
     backgroundColor: "#B0C4DE",
-
+    borderWidth: 2,
+    borderColor: "lightgrey",
     borderRadius: 10,
     paddingTop: 8,
     paddingLeft: 8,
@@ -367,6 +368,8 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingLeft: 8,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "lightgrey",
   },
 
   nameContainerText: {
