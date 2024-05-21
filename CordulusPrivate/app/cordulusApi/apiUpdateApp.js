@@ -163,11 +163,6 @@ export default function updateAppPost() {
             </View>
 
             <View style={styles.rowContainer}>
-              <Text style={styles.regularSensorText}> Humidity:</Text>
-              <Text style={styles.itemData}> {item.humidity} </Text>
-            </View>
-
-            <View style={styles.rowContainer}>
               <Text style={moistureTextStyle}> Moisture:</Text>
               <Text style={styles.itemData}> {item.moisture} </Text>
             </View>
