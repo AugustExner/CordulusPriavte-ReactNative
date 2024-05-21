@@ -23,10 +23,12 @@ export default function plantDetailsScreen() {
   const [plantArray, setPlantArray] = useState([]);
 
   const screenWidth = Dimensions.get("window").width;
-  const { plantName, history, forecast, imageUri, gardenBedName } =
-    useLocalSearchParams();
+  const {plantName, history, forecast, imageUri, gardenBedName, targetMoisture: targetMoistureString} = useLocalSearchParams();
 
-  const { sunlight, water, soil, season } = getPlantData(plantName);
+  const { englishName, danishName, sunlight, water, soil, season } = getPlantData(plantName);
+  const plantNameForUrl = englishName !== "Data not available" ? englishName : danishName;
+  
+  const targetMoisture = parseInt(targetMoistureString, 10);
 
   const addPlantsToPlantArray = () => {
     let plants = plantName.split(",");
@@ -46,6 +48,8 @@ export default function plantDetailsScreen() {
     return date.toISOString().substring(0, 10);
   });
 
+ 
+  // Iterate through readings and group moisture values by date
   const moistureByDate = {};
   readings.forEach((reading) => {
     const readingDate = reading.time.substring(0, 10);
@@ -64,6 +68,9 @@ export default function plantDetailsScreen() {
     averageMoistureByDate[date] = averageMoisture;
   });
 
+  console.log("avg moist");
+  console.log(averageMoistureByDate);
+
   const rainByDate = {};
   rain.forEach((reading) => {
     const readingDate = reading.timestamp.substring(0, 10);
@@ -75,23 +82,86 @@ export default function plantDetailsScreen() {
     }
   });
 
+  console.log("rain");
+  console.log(rainByDate);
+
+
   const rainToMoisture = {};
   for (const date in rainByDate) {
     rainToMoisture[date] = rainByDate[date] * 0.4;
   }
 
-  const yesterdayMoisture = averageMoistureByDate[relativeDates[2]];
-  const todayMoisture = averageMoistureByDate[relativeDates[3]];
-  const difference = todayMoisture - yesterdayMoisture;
+
+  // Calculate the difference between yesterday (-1) and today (0)
+  let yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
+  let todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
+  let dryingRatio = 0;
+  let difference = todayMoisture - yesterdayMoisture;
+  if(difference < 0){
+    dryingRatio = difference; 
+  } else{
+    console.log("Ratio is positive");
+  }
+
+
+  let minMoistureDivider = targetMoisture < 60 ? 4 : 3;
+  let minMoisture = targetMoisture / minMoistureDivider;
+  
+  
+  let tomorrowMoisture = todayMoisture + dryingRatio;
+  console.log("Initial tomorrowMoisture:", tomorrowMoisture);
+  
+  if (tomorrowMoisture < minMoisture) {
+      tomorrowMoisture = targetMoisture;
+      console.log("automatic water: day +1");
+  }
+  console.log("Final tomorrowMoisture:", tomorrowMoisture);
+  
+  let plusTwoMoisture = tomorrowMoisture + dryingRatio;
+  console.log("Initial plusTwoMoisture:", plusTwoMoisture);
+  
+  if (plusTwoMoisture < minMoisture) {
+      plusTwoMoisture = targetMoisture;
+      console.log("automatic water: day +2");
+  }
+  console.log("Final plusTwoMoisture:", plusTwoMoisture);
+  
+  let plusThreeMoisture = plusTwoMoisture + dryingRatio;
+  console.log("Initial plusThreeMoisture:", plusThreeMoisture);
+  
+  if (plusThreeMoisture < minMoisture) {
+      plusThreeMoisture = targetMoisture;
+      console.log("automatic water: day +3");
+  }
+  console.log("Final plusThreeMoisture:", plusThreeMoisture);
 
   const predictedMoisture = {
-    [relativeDates[4]]:
-      todayMoisture + difference + (rainToMoisture[relativeDates[4]] || 0),
-    [relativeDates[5]]:
-      todayMoisture + 2 * difference + (rainToMoisture[relativeDates[5]] || 0),
-    [relativeDates[6]]:
-      todayMoisture + 3 * difference + (rainToMoisture[relativeDates[6]] || 0),
-  };
+    [relativeDates[4]]: tomorrowMoisture + rainToMoisture[relativeDates[4] || 0], // Index 4 corresponds to +1
+    [relativeDates[5]]: plusTwoMoisture + rainToMoisture[relativeDates[5] || 0], // Index 5 corresponds to +2
+    [relativeDates[6]]: plusThreeMoisture + rainToMoisture[relativeDates[6] || 0]// Index 6 corresponds to +3
+  }
+  console.log("predict");
+  console.log(predictedMoisture);
+
+  function getPlantData(plantName) {
+    const lowerCaseName = plantName.toLowerCase();
+    for (const key in plantData["plants"]) {
+      if (key.toLowerCase().includes(lowerCaseName)) {
+        return {
+          sunlight: plantData["plants"][key]["sunlight"],
+          water: plantData["plants"][key]["water"],
+          soil: plantData["plants"][key]["soil"],
+          season: plantData["plants"][key]["season"]
+        };
+      }
+    }
+    return { 
+      sunlight: "Data not available",
+      water: "Data not available",
+      soil: "Data not available",
+      season: "Data not available",
+    };
+  }
 
   const data = {
     labels: ["-3", "-2", "-1", "Today", "+1", "+2", "+3"],

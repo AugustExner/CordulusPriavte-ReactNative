@@ -130,7 +130,8 @@ export default function updateAppPost() {
                     history: JSON.stringify(item.history),
                     forecast: JSON.stringify(item.forecast),
                     imageUri: item.imageUri,
-                    gardenBedName: item.name,
+                    gardenBedName: item.name, 
+                    targetMoisture: item.targetMoisture,
                   },
                 });
               }}

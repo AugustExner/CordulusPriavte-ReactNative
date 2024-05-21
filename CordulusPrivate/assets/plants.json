@@ -1,61 +1,264 @@
 {
-    "plants": {
-      "carrots": {
-        "name": "Carrot",
-        "image": "/imagesPlants/Carrots.png",
-        "sunlight": "Requires full sun (6-8 hours daily)",
-        "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
-        "soil": "Prefers well-drained, loose soil rich in organic matter.",
-        "season": "March to May"
+  "plants": {
+    "carrots": {
+      "name": {
+        "english": "Carrot",
+        "danish": "Gulerod"
       },
-      "cucumbers": {
-        "name": "Cucumber",
-        "image": "path/to/cucumber_image.png",
-        "sunlight": "Requires full sun (6-8 hours daily)",
-        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
-        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
-        "season": "May to July"
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
+      "soil": "Prefers well-drained, loose soil rich in organic matter.",
+      "season": "March to May"
+    },
+    "cucumbers": {
+      "name": {
+        "english": "Cucumber",
+        "danish": "Agurk"
       },
-      "tomatoes": {
-        "name": "Tomato",
-        "image": "path/to/tomato_image.png",
-        "sunlight": "Requires full sun (6-8 hours daily)",
-        "water": "Requires watering 2-3 times per week, especially when fruits are developing. Avoid overwatering.",
-        "soil": "Prefers well-drained, nutrient-rich soil with a pH of 6.0-6.8.",
-        "season": "April to June"
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "May to July"
+    },
+    "tomatoes": {
+      "name": {
+        "english": "Tomato",
+        "danish": "Tomat"
       },
-      "onions": {
-        "name": "Onion",
-        "image": "path/to/onion_image.png",
-        "sunlight": "Thrives in full sun (6-8 hours daily)",
-        "water": "Requires watering 1-2 times per week, allowing the soil to dry slightly between waterings.",
-        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
-        "season": "March to May"
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, especially when fruits are developing. Avoid overwatering.",
+      "soil": "Prefers well-drained, nutrient-rich soil with a pH of 6.0-6.8.",
+      "season": "April to June"
+    },
+    "onions": {
+      "name": {
+        "english": "Onion",
+        "danish": "Løg"
       },
-      "peppers": {
-        "name": "Pepper",
-        "image": "path/to/pepper_image.png",
-        "sunlight": "Requires full sun (6-8 hours daily)",
-        "water": "Requires watering 2-3 times per week, allowing the soil to dry slightly between waterings.",
-        "soil": "Prefers well-drained, sandy loam soil with a pH of 6.0-6.8.",
-        "season": "April to June"
+      "sunlight": "Thrives in full sun (6-8 hours daily)",
+      "water": "Requires watering 1-2 times per week, allowing the soil to dry slightly between waterings.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "March to May"
+    },
+    "peppers": {
+      "name": {
+        "english": "Pepper",
+        "danish": "Peber"
       },
-      "lettuce": {
-        "name": "Lettuce",
-        "image": "path/to/lettuce_image.png",
-        "sunlight": "Thrives in partial shade (4-6 hours daily)",
-        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
-        "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
-        "season": "March to May, August to September"
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, allowing the soil to dry slightly between waterings.",
+      "soil": "Prefers well-drained, sandy loam soil with a pH of 6.0-6.8.",
+      "season": "April to June"
+    },
+    "lettuce": {
+      "name": {
+        "english": "Lettuce",
+        "danish": "Salat"
       },
-      "strawberries": {
-        "name": "Strawberry",
-        "image": "path/to/strawberry_image.png",
-        "sunlight": "Requires full sun (6-8 hours daily)",
-        "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy. Avoid overwatering the crown.",
-        "soil": "Prefers well-drained, slightly acidic soil rich in organic matter.",
-        "season": "April to June"
-      }
+      "sunlight": "Thrives in partial shade (4-6 hours daily)",
+      "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "March to May, August to September"
+    },
+    "strawberries": {
+      "name": {
+        "english": "Strawberry",
+        "danish": "Jordbær"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy. Avoid overwatering the crown.",
+      "soil": "Prefers well-drained, slightly acidic soil rich in organic matter.",
+      "season": "April to June"
+    },
+    "potatoes": {
+      "name": {
+        "english": "Potato",
+        "danish": "Kartoffel"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, especially during tuber formation. Avoid overwatering.",
+      "soil": "Prefers well-drained, loose soil rich in organic matter.",
+      "season": "April to July"
+    },
+    "spinach": {
+      "name": {
+        "english": "Spinach",
+        "danish": "Spinat"
+      },
+      "sunlight": "Thrives in partial shade (4-6 hours daily)",
+      "water": "Requires watering 3-4 times per week, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "March to May, September to November"
+    },
+    "broccoli": {
+      "name": {
+        "english": "Broccoli",
+        "danish": "Broccoli"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, keeping the soil moist but not waterlogged.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "March to June, September to November"
+    },
+    "zucchini": {
+      "name": {
+        "english": "Zucchini",
+        "danish": "Squash"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, keeping the soil moist but not waterlogged.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "May to August"
+    },
+    "peas": {
+      "name": {
+        "english": "Peas",
+        "danish": "Ærter"
+      },
+      "sunlight": "Thrives in partial shade to full sun (4-8 hours daily)",
+      "water": "Requires watering 2-3 times per week, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "March to May, September to November"
+    },
+    "turnips": {
+      "name": {
+        "english": "Turnips",
+        "danish": "Hvidkål"
+      },
+      "sunlight": "Requires full sun to partial shade (4-6 hours daily)",
+      "water": "Requires regular watering, keeping the soil evenly moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "March to May, August to October"
+    },
+    "horseradish": {
+      "name": {
+        "english": "Horseradish",
+        "danish": "Peberrod"
+      },
+      "sunlight": "Thrives in partial shade to full sun (4-8 hours daily)",
+      "water": "Requires moderate watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, sandy loam soil with a pH of 6.0-7.0.",
+      "season": "March to May, September to November"
+    },
+    "rhubarb": {
+      "name": {
+        "english": "Rhubarb",
+        "danish": "Rabarber"
+      },
+      "sunlight": "Thrives in partial shade to full sun (4-8 hours daily)",
+      "water": "Requires moderate watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 5.5-6.5.",
+      "season": "April to June"
+    },
+    "blueberries": {
+      "name": {
+        "english": "Blueberries",
+        "danish": "Blåbær"
+      },
+      "sunlight": "Requires full sun to partial shade (4-6 hours daily)",
+      "water": "Requires regular watering, keeping the soil evenly moist.",
+      "soil": "Prefers well-drained, acidic soil with a pH of 4.5-5.5.",
+      "season": "June to August"
+    },
+    "beetroots": {
+      "name": {
+        "english": "Beetroots",
+        "danish": "Rødbeder"
+      },
+      "sunlight": "Requires full sun to partial shade (4-6 hours daily)",
+      "water": "Requires regular watering, keeping the soil evenly moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "March to May, August to October"
+    },
+    "asparagus": {
+      "name": {
+        "english": "Asparagus",
+        "danish": "Asparges"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, sandy soil with a pH of 6.5-7.5.",
+      "season": "April to June"
+    },
+    "rosemary": {
+      "name": {
+        "english": "Rosemary",
+        "danish": "Rosmarin"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires moderate watering, allowing the soil to dry out slightly between waterings.",
+      "soil": "Prefers well-drained, sandy soil with a pH of 6.0-7.0.",
+      "season": "Year-round, but slows growth in winter"
+    },
+    "thyme": {
+      "name": {
+        "english": "Thyme",
+        "danish": "Timian"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires moderate watering, allowing the soil to dry out slightly between waterings.",
+      "soil": "Prefers well-drained, sandy soil with a pH of 6.0-8.0.",
+      "season": "Year-round, but slows growth in winter"
+    },
+    "basil": {
+      "name": {
+        "english": "Basil",
+        "danish": "Basilikum"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil evenly moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "May to September"
+    },
+    "parsley": {
+      "name": {
+        "english": "Parsley",
+        "danish": "Persille"
+      },
+      "sunlight": "Thrives in partial shade to full sun (4-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "Year-round"
+    },
+    "oregano": {
+      "name": {
+        "english": "Oregano",
+        "danish": "Oregano"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires moderate watering, allowing the soil to dry out slightly between waterings.",
+      "soil": "Prefers well-drained, sandy soil with a pH of 6.0-8.0.",
+      "season": "Year-round"
+    },
+    "mint": {
+      "name": {
+        "english": "Mint",
+        "danish": "Mynte"
+      },
+      "sunlight": "Requires partial shade to full sun (4-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.0.",
+      "season": "Year-round"
+    },
+    "cilantro": {
+      "name": {
+        "english": "Cilantro",
+        "danish": "Koriander"
+      },
+      "sunlight": "Requires partial shade to full sun (4-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil consistently moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-7.5.",
+      "season": "Spring to early summer"
+    },
+    "chili": {
+      "name": {
+        "english": "Chili",
+        "danish": "Chili"
+      },
+      "sunlight": "Requires full sun (6-8 hours daily)",
+      "water": "Requires regular watering, keeping the soil evenly moist.",
+      "soil": "Prefers well-drained, fertile soil with a pH of 6.0-6.5.",
+      "season": "Spring to early summer"
     }
   }
-  
+}
