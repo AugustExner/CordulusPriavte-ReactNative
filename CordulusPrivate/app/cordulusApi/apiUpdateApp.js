@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   },
 
   topBorder: {
-    width: ScreenWidth - 32, // Ensures full-width border
+    width: ScreenWidth, // Ensures full-width border
     height: 1, // Adjust border thickness as needed
     backgroundColor: "lightgrey", // Adjust border color
   },
