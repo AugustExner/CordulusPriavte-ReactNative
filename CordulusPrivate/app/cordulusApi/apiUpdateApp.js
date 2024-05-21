@@ -15,6 +15,7 @@ import { router } from "expo-router";
 import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
+import { ScreenWidth } from "react-native-elements/dist/helpers";
 
 export default function updateAppPost() {
   const [refreshing, setRefreshing] = useState(false);
@@ -64,6 +65,13 @@ export default function updateAppPost() {
     const today = new Date();
     const date = today.toISOString().substring(0, 10);
     console.log(date);
+  };
+
+  const BottomBorder = () => {
+    return <View style={styles.bottomBorder} />;
+  };
+  const TopBorder = () => {
+    return <View style={styles.topBorder} />;
   };
 
   const renderItem = ({ item }) => {
@@ -184,12 +192,14 @@ export default function updateAppPost() {
         </View>
       </View>
     );
-  };    
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor="white" />
       <Text style={styles.headerText}>Gardenbeds</Text>
+      
+      <TopBorder />
       <FlatList
         style={styles.flatList}
         data={postData}
@@ -199,7 +209,7 @@ export default function updateAppPost() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
-
+      <BottomBorder />
       <TouchableOpacity style={styles.touchButton} onPress={() => fetchData()}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
@@ -376,7 +386,22 @@ const styles = StyleSheet.create({
     maxWidth: 200,
   },
 
-  flatList:{
+  flatList: {
+    //marginBottom:,
+    //borderBottomWidth: 2,
+    //borderTopWidth: 2,
+    //borderColor: "lightgrey",
+    padding: 10,
+  },
+  bottomBorder: {
+    width: ScreenWidth - 32, // Ensures full-width border
+    height: 1, // Adjust border thickness as needed
+    backgroundColor: "lightgrey", // Adjust border color
     marginBottom: 130,
-  }
+  },
+  topBorder: {
+    width: ScreenWidth - 32, // Ensures full-width border
+    height: 1, // Adjust border thickness as needed
+    backgroundColor: "lightgrey", // Adjust border color
+  },
 });
