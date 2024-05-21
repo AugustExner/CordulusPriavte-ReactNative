@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     fontWeight: "bold",
+    color: "hsl(159, 60%, 20%)",
   },
   input: {
     height: 40,
@@ -283,7 +284,6 @@ const styles = StyleSheet.create({
     borderColor: "#F2F2F2",
     bottom: 0, // Position from bottom
     justifyContent: "center",
-    marginBottom: 18,
     alignItems: "center",
   },
 

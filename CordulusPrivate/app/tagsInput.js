@@ -7,6 +7,8 @@ import {
   StyleSheet,
 } from "react-native";
 
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
 
 
 export default function TagInputComponent({ tags, setTags }) {
@@ -55,7 +57,7 @@ export default function TagInputComponent({ tags, setTags }) {
               onPress={() => removeTag(index)}
               style={styles.removeButton}
             >
-              <Text style={styles.removeButtonText}>X</Text>
+              <MaterialIcons name="highlight-remove" style={styles.icon}/>
             </TouchableOpacity>
           </View>
         ))}
@@ -101,32 +103,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 5,
     marginRight: 5,
+    borderWidth: 2,
+    borderColor: 'hsl(159, 60%, 20%)',
+    borderRadius: 20,
+    paddingRight: 8,
   },
   tag: {
     backgroundColor: "#F2F2F2",
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderWidth: 2,
-    borderColor: "#222222",
   },
   tagText: {
-    color: "#222222",
+    color: "hsl(159, 60%, 20%)",
     fontWeight: "bold",
     fontSize: 12,
   },
-  removeButton: {
-    marginLeft: 5,
-    padding: 3,
-    borderRadius: 5,
-    backgroundColor: "#222222",
-    borderWidth: 3,
-    borderColor: "#222222",
+
+  icon:{
+    fontSize: 20,
+    color: "hsl(159, 60%, 20%)",
+    
   },
-  removeButtonText: {
-    color: "#F2F2F2",
-    fontSize: 12,
-  },
+
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",

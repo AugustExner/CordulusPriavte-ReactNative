@@ -56,8 +56,8 @@ export default function ImageComponent({ setImage }) {
 // Add styles here or import from elsewhere
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 32,
-    marginTop: 32,
+    marginTop: 10,
+    marginBottom: 10,
     flex: 1,
     alignItems: "center",
   },
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
   },
   cameraIcon: {
     fontSize: 30, // Adjust icon size as needed
-    color: "#222222", // Adjust icon color as desired
+    color: "hsl(159, 60%, 20%)", // Adjust icon color as desired
   },
   uploadIcon: {
     fontSize: 30, // Adjust icon size as
-    color: "#222222",
+    color: "hsl(159, 60%, 20%)",
   },
   iconContainer: {
     flex: 1,
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 220,
-    marginBottom: 80,
+    marginBottom: 20,
   },
   uploadIconContainer: {
     justifyContent: "center",
     alignItems: "center",
     marginRight: 220,
-    marginBottom: 80,
+    marginBottom: 20,
   },
 });
