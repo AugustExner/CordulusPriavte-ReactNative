@@ -377,7 +377,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontWeight: "bold",
     fontSize: 24,
-    marginTop: 20,
     marginBottom: 20,
     color: "hsl(159, 60%, 20%)",
 
