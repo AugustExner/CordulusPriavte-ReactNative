@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
 
   touchButton: {
-    backgroundColor: "#222222",
+    backgroundColor: "hsl(159, 60%, 20%)",
     height: 50,
     borderRadius: 10, // Set diameter as width and round corners for circle
     borderWidth: 2,

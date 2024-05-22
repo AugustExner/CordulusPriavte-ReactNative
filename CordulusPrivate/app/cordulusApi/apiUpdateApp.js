@@ -10,16 +10,19 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Dimensions
 } from "react-native";
 import { router } from "expo-router";
 import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
-import { ScreenWidth } from "react-native-elements/dist/helpers";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function updateAppPost() {
   const [refreshing, setRefreshing] = useState(false);
   const [postData, setPostData] = useState(null); // State to store API response
+  
+  const screenWidth = Dimensions.get("window").width;
 
   generateRandomNumber = () => {
     const min = 1;
@@ -49,7 +52,7 @@ export default function updateAppPost() {
   }, [postData]);
 
   const deleteButtonAlert = (id, garden) =>
-    Alert.alert("Delete Gardenbed", garden, [
+    Alert.alert("Delete Garden Bed", garden, [
       {
         text: "Cancel",
         onPress: () => console.log("Cancel Pressed"),
@@ -65,10 +68,6 @@ export default function updateAppPost() {
     const today = new Date();
     const date = today.toISOString().substring(0, 10);
     console.log(date);
-  };
-
-  const TopBorder = () => {
-    return <View style={styles.topBorder} />;
   };
 
   const renderItem = ({ item }) => {
@@ -143,7 +142,8 @@ export default function updateAppPost() {
 
           <View style={styles.nameContainer}>
             <View style={styles.columnContainer}>
-              <Text style={styles.regularText}> Plants:</Text>
+              <Ionicons name="flower-outline" style={styles.icons}/>
+              <Text style={styles.greenText}> Plants:</Text>
               <Text style={styles.nameContainerText}>
                 {" "}
                 {item.plants.join(", ")}{" "}
@@ -153,23 +153,27 @@ export default function updateAppPost() {
 
           <View style={styles.sensorContainer}>
             <View style={styles.rowContainer}>
-              <Text style={styles.regularSensorText}> SensorID:</Text>
+              <Ionicons name="barcode-outline" style={styles.icons}/>
+              <Text style={styles.regularSensorText}> Sensor ID:</Text>
               <Text style={styles.itemData}> {item.id} </Text>
             </View>
 
             <View style={styles.rowContainer}>
+              <Ionicons name="sunny-outline" style={styles.icons}/>
               <Text style={styles.regularSensorText}> Temperature:</Text>
-              <Text style={styles.itemData}> {item.temperature} </Text>
+              <Text style={styles.itemData}> {item.temperature}°C</Text>
             </View>
 
             <View style={styles.rowContainer}>
+              <Ionicons name="water-outline" style={styles.icons}/>
               <Text style={moistureTextStyle}> Moisture:</Text>
-              <Text style={styles.itemData}> {item.moisture} </Text>
+              <Text style={styles.itemData}> {item.moisture}% </Text>
             </View>
 
             <View style={styles.rowContainer}>
-              <Text style={styles.regularSensorText}> Todays rain:</Text>
-              <Text style={styles.itemData}> {totalRain} </Text>
+              <Ionicons name="rainy-outline" style={styles.icons}/>
+              <Text style={styles.regularSensorText}> Rain:</Text>
+              <Text style={styles.itemData}> {totalRain} mm </Text>
             </View>
           </View>
 
@@ -189,10 +193,8 @@ export default function updateAppPost() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="white" />
-      <Text style={styles.headerText}>Gardenbeds</Text>
-
-      <TopBorder />
+      <StatusBar backgroundColor="#F2F2F2" />
+      <Text style={styles.headerText}>Garden Beds</Text>
       <FlatList
         style={styles.flatList}
         data={postData}
@@ -209,13 +211,14 @@ export default function updateAppPost() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
     alignItems: "center",
   },
 
   postContainer: {
-    width: 360,
-    backgroundColor: "#fff",
+    width: Dimensions.get('window').width - 40,
+    alignSelf: 'center',
+    backgroundColor: "#F2F2F2",
     borderRadius: 10,
     padding: 10,
     shadowColor: "#000",
@@ -235,17 +238,22 @@ const styles = StyleSheet.create({
   headerText: {
     marginBottom: 12,
     marginTop: 24,
-    fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 30,
+    color: 'hsl(159, 60%, 20%)',
+    fontWeight: 'bold',
   },
 
   plantText: {
     marginBottom: 5,
-    fontWeight: "bold",
     alignItems: "center",
     justifyContent: "flex-end",
     fontSize: 18,
   },
+
+  greenText:{
+    fontSize: 18,
+    marginBottom: 5,
+  },  
 
   imageContainer: {
     justifyContent: "center",
@@ -257,7 +265,7 @@ const styles = StyleSheet.create({
     height: 140,
     borderRadius: 100,
     borderWidth: 3,
-    borderColor: "black",
+    borderColor: "hsl(159, 60%, 20%)",
     marginBottom: 18,
     marginTop: 18,
   },
@@ -265,15 +273,18 @@ const styles = StyleSheet.create({
   regularText: {
     marginBottom: 8,
     fontSize: 18,
-    fontWeight: "bold",
   },
 
   lowMoistureText: {
-    color: "red",
+    color: "#ff7777",
     marginBottom: 8,
     fontSize: 18,
-    fontWeight: "bold",
   },
+
+  icons:{
+    paddingTop: 4,
+    fontSize: 18,
+  },  
 
   rowContainer: {
     flexDirection: "row",
@@ -285,28 +296,16 @@ const styles = StyleSheet.create({
   },
 
   columnContainer: {
-    flexDirection: "column",
-  },
-
-  touchButton: {
-    backgroundColor: "black",
-    width: 120,
-    height: 70,
-    borderRadius: 20,
-    position: "absolute", // Remove from normal flow
-    bottom: 32, // Position from bottom
-    right: 34, // Position from right
-    alignItems: "center", // Center content horizontally
-    justifyContent: "center", // Center content vertically
+    flexDirection: "row",
   },
 
   deleteButton: {
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
     width: 18,
     height: 18,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "red",
+    borderColor: "#ff7777",
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
     top: 10,
@@ -315,61 +314,47 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     fontSize: 8,
-    color: "red",
-    fontWeight: "bold",
-  },
-  buttonText: {
-    fontSize: 18,
-    color: "white",
+    color: "#ff7777",
     fontWeight: "bold",
   },
 
   highMoistureText: {
-    color: "blue",
+    color: "#77a5ff",
     marginBottom: 8,
     fontSize: 18,
-    fontWeight: "bold",
   },
 
   itemData: {
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
     fontSize: 18,
-    color: "#0C2340",
+    color: "#222222",
   },
 
   regularSensorText: {
     marginBottom: 8,
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#0C2340",
+
+    color: "#222222",
   },
 
   bedNameText: {
     marginBottom: 8,
     fontSize: 18,
     fontWeight: "bold",
-    color: "#0C2340",
+    color: "hsl(159, 60%, 20%)",
     alignSelf: "center",
   },
 
   sensorContainer: {
-    marginTop: 18,
-    backgroundColor: "#B0C4DE",
-    borderWidth: 2,
-    borderColor: "lightgrey",
-    borderRadius: 10,
-    paddingTop: 8,
     paddingLeft: 8,
   },
 
   nameContainer: {
-    backgroundColor: "skyblue",
+    backgroundColor: "#f2f2f2",
     paddingTop: 8,
     paddingLeft: 8,
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "lightgrey",
   },
 
   nameContainerText: {
@@ -380,11 +365,5 @@ const styles = StyleSheet.create({
   },
   flatList: {
     padding: 10,
-  },
-
-  topBorder: {
-    width: ScreenWidth, // Ensures full-width border
-    height: 1, // Adjust border thickness as needed
-    backgroundColor: "lightgrey", // Adjust border color
   },
 });

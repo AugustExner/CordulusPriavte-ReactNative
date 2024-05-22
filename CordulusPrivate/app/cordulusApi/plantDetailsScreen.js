@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#f2f2f2",
     borderWidth: 3,
-    width: 360,
+    width: Dimensions.get('window').width - 40,
     borderColor: "lightgrey",
     borderRadius: 10,
     padding: 5,
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 20,
     marginBottom: 20,
-    color: "#2196F3",
+    color: "#77a5ff",
     alignSelf: "center",
   },
 
