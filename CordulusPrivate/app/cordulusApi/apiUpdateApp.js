@@ -177,10 +177,6 @@ export default function updateAppPost() {
           </View>
 
           <View style={styles.nameContainer}>
-            <View style={styles.rowContainer}>
-              <Ionicons name="flower-outline" style={styles.icons}/>
-              <Text style={styles.regularSensorText}> Plants:</Text>
-            </View>
             <View style={styles.tagsContainer}>
                 {item.plants.map((plant, index) => (
                   <PlantTag key={index} name={plant} />
