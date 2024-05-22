@@ -74,13 +74,12 @@ export default function plantDetailsScreen() {
     averageMoistureByDate[date] = averageMoisture;
   });
 
-  console.log("avg moist");
-  console.log(averageMoistureByDate);
+  console.log("avg moist", averageMoistureByDate);
 
   const rainByDate = {};
   rain.forEach((reading) => {
     const readingDate = reading.timestamp.substring(0, 10);
-    if (relativeDates.slice(4, 7).includes(readingDate)) {
+    if (relativeDates.includes(readingDate)) {
       if (!rainByDate[readingDate]) {
         rainByDate[readingDate] = 0;
       }
@@ -88,8 +87,7 @@ export default function plantDetailsScreen() {
     }
   });
 
-  console.log("rain");
-  console.log(rainByDate);
+  console.log("rain:", rainByDate);
 
   const rainToMoisture = {};
   for (const date in rainByDate) {
@@ -98,17 +96,24 @@ export default function plantDetailsScreen() {
 
   // Calculate the difference between yesterday (-1) and today (0)
   let yesterdayMoisture = averageMoistureByDate[relativeDates[2]]; // Index 2 corresponds to -1
+  console.log("yesterdayMoist:", yesterdayMoisture);
   let todayMoisture = averageMoistureByDate[relativeDates[3]]; // Index 3 corresponds to 0
+  if(todayMoisture == undefined){
+    todayMoisture = 0;
+  }
+  console.log("todayMoist:", todayMoisture);
   let dryingRatio = 0;
   let difference = todayMoisture - yesterdayMoisture;
   if (difference < 0) {
     dryingRatio = difference;
+    console.log("Ratio is negative", dryingRatio);
   } else {
-    console.log("Ratio is positive");
+    console.log("Ratio is positive", dryingRatio);
   }
 
   let minMoistureDivider = targetMoisture < 60 ? 4 : 3;
   let minMoisture = targetMoisture / minMoistureDivider;
+  console.log("Min moist:", minMoisture);
 
   let tomorrowMoisture = todayMoisture + dryingRatio;
   console.log("Initial tomorrowMoisture:", tomorrowMoisture);
@@ -144,8 +149,7 @@ export default function plantDetailsScreen() {
     [relativeDates[6]]:
       plusThreeMoisture + rainToMoisture[relativeDates[6] || 0], // Index 6 corresponds to +3
   };
-  console.log("predict");
-  console.log(predictedMoisture);
+  console.log("predictedMoisture:", predictedMoisture);
 
   function getPlantData(plantName) {
     const lowerCaseName = plantName.toLowerCase();
@@ -292,8 +296,12 @@ export default function plantDetailsScreen() {
                   <Text style={styles.modalText}>
                     Moisture: {clickedValue}%
                   </Text>
+                  <Text style={styles.modalText}>Rain: {rainByDate[clickedDate] || 0} mm</Text>
+                  <Text style={styles.miniText}>Next Day Moisture Prediction:</Text>
+                  <Text style={styles.miniText}>if(todayMoisture) less than minMoisture: </Text>
                   <Text style={styles.miniText}>
-                    Predicted moisture: Delta(yesterday-today) + (4* mm rain)
+                    (targetMoisture + yesterdayMoisture - todayMoisture) + (RainMoistRatio * daily mm rain)
+                  = ({targetMoisture} + {yesterdayMoisture} - {todayMoisture}) + (0.4 * {rainByDate[clickedDate]})
                   </Text>
                   <TouchableOpacity
                     style={styles.closeButton}
@@ -414,6 +422,9 @@ const styles = StyleSheet.create({
 
     color: "#222222",
   },
+  miniText:{
+    fontSize: 10,
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -439,11 +450,13 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+
   closeButton: {
     backgroundColor: "#2196F3",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginTop: 10,
   },
   closeButtonText: {
     color: "white",
