@@ -17,6 +17,7 @@ import { deleteGardenbed } from "./apiDelete";
 import { readSensorArray, clearAsyncStorage } from "../sensorStorage";
 import { useState, useEffect, useCallback, useId } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function updateAppPost() {
   const [refreshing, setRefreshing] = useState(false);
@@ -140,16 +141,7 @@ export default function updateAppPost() {
             <Text style={styles.bedNameText}> {item.name} </Text>
           </View>
 
-          <View style={styles.nameContainer}>
-            <View style={styles.columnContainer}>
-              <Ionicons name="flower-outline" style={styles.icons}/>
-              <Text style={styles.greenText}> Plants:</Text>
-              <Text style={styles.nameContainerText}>
-                {" "}
-                {item.plants.join(", ")}{" "}
-              </Text>
-            </View>
-          </View>
+
 
           <View style={styles.sensorContainer}>
             <View style={styles.rowContainer}>
@@ -177,6 +169,17 @@ export default function updateAppPost() {
             </View>
           </View>
 
+          <View style={styles.nameContainer}>
+            <View style={styles.columnContainer}>
+              <Ionicons name="flower-outline" style={styles.icons}/>
+              <Text style={styles.greenText}> Plants:</Text>
+              <Text style={styles.nameContainerText}>
+                {" "}
+                {item.plants.join(", ")}{" "}
+              </Text>
+            </View>
+          </View>
+
           <TouchableOpacity
             style={styles.deleteButton}
             //onPress={() => clearAsyncStorage()}
@@ -184,7 +187,7 @@ export default function updateAppPost() {
               deleteButtonAlert(item.id, item.name);
             }}
           >
-            <Text style={styles.deleteButtonText}>X</Text>
+            <AntDesign name="delete" style={styles.deleteButtonText}/>
           </TouchableOpacity>
         </View>
       </View>
@@ -304,8 +307,6 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#ff7777",
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
     top: 10,
@@ -313,7 +314,7 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Center content vertically
   },
   deleteButtonText: {
-    fontSize: 8,
+    fontSize: 18,
     color: "#ff7777",
     fontWeight: "bold",
   },
@@ -352,7 +353,6 @@ const styles = StyleSheet.create({
 
   nameContainer: {
     backgroundColor: "#f2f2f2",
-    paddingTop: 8,
     paddingLeft: 8,
     borderRadius: 10,
   },

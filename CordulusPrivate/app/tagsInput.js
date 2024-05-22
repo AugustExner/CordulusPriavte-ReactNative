@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#F2F2F2",
   },
   container: {
     width: "100%",
@@ -107,23 +107,24 @@ const styles = StyleSheet.create({
     borderColor: 'hsl(159, 60%, 20%)',
     borderRadius: 20,
     paddingRight: 8,
+    backgroundColor: 'hsl(159, 60%, 20%)',
   },
   tag: {
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "hsl(159, 60%, 20%)",
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
   tagText: {
-    color: "hsl(159, 60%, 20%)",
+    color: "#F2F2F2",
     fontWeight: "bold",
     fontSize: 12,
   },
 
   icon:{
     fontSize: 20,
-    color: "hsl(159, 60%, 20%)",
-    
+    color: "#F2F2F2",
+
   },
 
   inputContainer: {
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: "#F2F2F2",
     fontSize: 16,
     fontWeight: "bold",
   },
