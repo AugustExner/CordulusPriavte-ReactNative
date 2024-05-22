@@ -19,6 +19,13 @@ import { useState, useEffect, useCallback, useId } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
+// PlantTag component for individual plant tags
+const PlantTag = ({ name }) => (
+  <View style={styles.tag}>
+    <Text style={styles.tagText}>{name}</Text>
+  </View>
+);
+
 export default function updateAppPost() {
   const [refreshing, setRefreshing] = useState(false);
   const [postData, setPostData] = useState(null); // State to store API response
@@ -170,13 +177,14 @@ export default function updateAppPost() {
           </View>
 
           <View style={styles.nameContainer}>
-            <View style={styles.columnContainer}>
+            <View style={styles.rowContainer}>
               <Ionicons name="flower-outline" style={styles.icons}/>
-              <Text style={styles.greenText}> Plants:</Text>
-              <Text style={styles.nameContainerText}>
-                {" "}
-                {item.plants.join(", ")}{" "}
-              </Text>
+              <Text style={styles.regularSensorText}> Plants:</Text>
+            </View>
+            <View style={styles.tagsContainer}>
+                {item.plants.map((plant, index) => (
+                  <PlantTag key={index} name={plant} />
+                ))}
             </View>
           </View>
 
@@ -253,11 +261,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  greenText:{
-    fontSize: 18,
-    marginBottom: 5,
-  },  
-
   imageContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -296,10 +299,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  columnContainer: {
-    flexDirection: "row",
   },
 
   deleteButton: {
@@ -360,10 +359,32 @@ const styles = StyleSheet.create({
   nameContainerText: {
     position: "absolute", // Remove from normal flow
     right: 10, // Position from right
-    fontSize: 18,
+    fontSize: 14,
     maxWidth: 200,
+    backgroundColor: 'hsl(159, 60%, 20%)',
+    borderRadius: 20,
+    color: "#F2F2F2",
+    padding: 4,
   },
   flatList: {
     padding: 10,
+  },
+
+  tagsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  tag: {
+    backgroundColor: "hsl(159, 60%, 20%)",
+    borderRadius: 50,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    margin: 4,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  tagText: {
+    color: "#F2F2F2",
+    fontSize: 14,
   },
 });

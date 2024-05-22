@@ -33,10 +33,7 @@ export default function plantDetailsScreen() {
     targetMoisture: targetMoistureString,
   } = useLocalSearchParams();
 
-  const { englishName, danishName, sunlight, water, soil, season } =
-    getPlantData(plantName);
-  const plantNameForUrl =
-    englishName !== "Data not available" ? englishName : danishName;
+  const { englishName, danishName, sunlight, water, soil, season } = getPlantData(plantName);
 
   const targetMoisture = parseInt(targetMoistureString, 10);
 
@@ -153,7 +150,9 @@ export default function plantDetailsScreen() {
   function getPlantData(plantName) {
     const lowerCaseName = plantName.toLowerCase();
     for (const key in plantData["plants"]) {
-      if (key.toLowerCase().includes(lowerCaseName)) {
+      const plantInfo = plantData["plants"][key];
+      if(plantInfo["name"]["english"].toLowerCase().includes(lowerCaseName) ||
+      plantInfo["name"]["danish"].toLowerCase().includes(lowerCaseName)) {
         return {
           sunlight: plantData["plants"][key]["sunlight"],
           water: plantData["plants"][key]["water"],

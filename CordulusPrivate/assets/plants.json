@@ -2,8 +2,8 @@
   "plants": {
     "carrots": {
       "name": {
-        "english": "Carrot",
-        "danish": "Gulerod"
+        "english": "Carrots",
+        "danish": "Gulerødder / Gulerod"
       },
       "sunlight": "Requires full sun (6-8 hours daily)",
       "water": "Requires watering 2-3 times per week, especially during hot weather. Avoid overwatering.",
@@ -12,8 +12,8 @@
     },
     "cucumbers": {
       "name": {
-        "english": "Cucumber",
-        "danish": "Agurk"
+        "english": "Cucumbers",
+        "danish": "Agurker"
       },
       "sunlight": "Requires full sun (6-8 hours daily)",
       "water": "Requires watering 3-4 times per week, keeping the soil moist but not soggy.",
@@ -22,8 +22,8 @@
     },
     "tomatoes": {
       "name": {
-        "english": "Tomato",
-        "danish": "Tomat"
+        "english": "Tomatoes",
+        "danish": "Tomater"
       },
       "sunlight": "Requires full sun (6-8 hours daily)",
       "water": "Requires watering 2-3 times per week, especially when fruits are developing. Avoid overwatering.",
@@ -32,7 +32,7 @@
     },
     "onions": {
       "name": {
-        "english": "Onion",
+        "english": "Onions",
         "danish": "Løg"
       },
       "sunlight": "Thrives in full sun (6-8 hours daily)",
@@ -42,7 +42,7 @@
     },
     "peppers": {
       "name": {
-        "english": "Pepper",
+        "english": "Peppers",
         "danish": "Peber"
       },
       "sunlight": "Requires full sun (6-8 hours daily)",
@@ -72,8 +72,8 @@
     },
     "potatoes": {
       "name": {
-        "english": "Potato",
-        "danish": "Kartoffel"
+        "english": "Potatoes",
+        "danish": "Kartoffel / Kartofler"
       },
       "sunlight": "Requires full sun (6-8 hours daily)",
       "water": "Requires watering 2-3 times per week, especially during tuber formation. Avoid overwatering.",
