@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, Dimensions, StyleSheet } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useLocalSearchParams } from "expo-router";
 import _ from "lodash";
 
 export default function plantDetailsScreen() {
   const screenWidth = Dimensions.get("window").width;
-  const { history } = useLocalSearchParams();
+  const { history, gardenBedName } = useLocalSearchParams();
 
   let readings = JSON.parse(history);
 
@@ -46,6 +46,7 @@ export default function plantDetailsScreen() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>{gardenBedName}</Text>
       <LineChart
         data={data}
         width={screenWidth - 60}
@@ -66,6 +67,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "hsl(159, 60%, 20%)",
   },
   lineChart: {
     marginVertical: 8,
